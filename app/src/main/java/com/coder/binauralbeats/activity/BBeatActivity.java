@@ -133,11 +133,14 @@ public class BBeatActivity extends BaseActivity {
         if (currentProgram==null) {
             finish();
         }
+
+        Log.e(TAG,currentProgram.getName());
+        String name=currentProgram.getName();
         selectProgram();
 
         setSupportActionBar(beatToolbar);
         if (getSupportActionBar()!=null) {
-            getSupportActionBar().setTitle("ddddddddd");
+            getSupportActionBar().setTitle(name);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         beatToolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -151,8 +154,7 @@ public class BBeatActivity extends BaseActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_play_pause:
-                        Log.e(TAG,"=====pause_time > 0====="+ (pause_time > 0));
-                        item.setIcon(pause_time > 0 ? R.drawable.ic_action_pause:R.drawable.ic_action_play);
+                        item.setIcon(pause_time > 0 ? R.drawable.ic_action_play:R.drawable.ic_action_pause);
                         pauseOrResume();
                         break;
                     case R.id.action_visable:
@@ -515,7 +517,9 @@ public class BBeatActivity extends BaseActivity {
      * Go through all currently running beat voices and stop them
      */
     protected void stopAllVoices() {
-        vp.stopVoices();
+        if (vp!=null){
+            vp.stopVoices();
+        }
     }
 
     class RunProgram implements Runnable {

@@ -88,7 +88,6 @@ public class VoicesPlayer extends Thread {
 	public void stopVoices() {
 		playing = false;
 		track.stop();
-		
 		anglesL = new int[MAX_VOICES];
 		anglesR = new int[MAX_VOICES];
 		anglesISO = new int[MAX_VOICES];
