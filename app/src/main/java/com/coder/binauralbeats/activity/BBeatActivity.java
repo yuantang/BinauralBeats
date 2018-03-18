@@ -49,53 +49,38 @@ import java.util.Vector;
 import butterknife.BindView;
 
 public class BBeatActivity extends BaseActivity {
-
     private static final String TAG = "BBeatActivity";
     @BindView(R.id.beat_toolbar)
     Toolbar beatToolbar;
+    //背景展示
     @BindView(R.id.VisualizationView)
     FrameLayout mVizHolder ;
     @BindView(R.id.soundBGVolumeBar)
-    SeekBar soundBGVolumeBar;//背景音量控制
+    //背景音量控制
+            SeekBar soundBGVolumeBar;
     @BindView(R.id.soundVolumeBar)
-    SeekBar soundVolumeBar; //音量控制
+    //音量控制
+            SeekBar soundVolumeBar;
+    //双耳节拍频率折线图
     @BindView(R.id.graphVoices)
     LinearLayout mGraphVoices;
+    //双耳节拍频率
     @BindView(R.id.Status)
     TextView Status;
 
 
     enum eState {START, RUNNING, END}
-    enum appState {SETUP, INPROGRAM}
-
     private static final int MAX_STREAMS = 5;
-
     private View mVizV;
-
-
-
-
     private int soundWhiteNoise;
     private int soundUnity;
     private SoundPool mSoundPool;
-
     private NotificationManager mNotificationManager;
-
-
-
     private Handler mHandler = new Handler();
     private RunProgram programFSM;
     private long pause_time = -1;
-
     private Vector<StreamVoice> playingStreams;
     private int playingBackground = -1;
-
-
-    private float mSoundBeatVolume;
-
-    private float mSoundBGVolume;
-
-
 
     private static final float DEFAULT_VOLUME = 0.6f;
     private static final float BG_VOLUME_RATIO = 0.4f;
@@ -104,15 +89,18 @@ public class BBeatActivity extends BaseActivity {
 
     private static final String PREFS_NAME = "BBT";
     private static final String PREFS_VIZ = "VIZ";
-    private static final String PREFS_NUM_STARTS = "NUM_STARTS";
 
-    private VoicesPlayer vp;
-    boolean glMode = false;
-    boolean vizEnabled = true;
+    private boolean glMode = false;
+    private boolean vizEnabled = true;
+    /**节拍音频大小*/
+    private float mSoundBeatVolume;
+    /**背景音频大小*/
+    private float mSoundBGVolume;
 
+    /**播放器*/
+    private VoicesPlayer mVoicesPlayer;
+    /**当前播放的*/
     private static Program currentProgram;
-
-
 
     @Override
     protected int getLayout() {
@@ -127,16 +115,18 @@ public class BBeatActivity extends BaseActivity {
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
         mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
-        Event event= EventBus.getDefault().getStickyEvent(Event.class);
+
+        BusEvent event = EventBus.getDefault().getStickyEvent(BusEvent.class);
         currentProgram = (Program) event.getValue();
 
         if (currentProgram==null) {
             finish();
         }
+        String name = currentProgram.getName();
 
-        Log.e(TAG,currentProgram.getName());
-        String name=currentProgram.getName();
-        selectProgram();
+        startProgram();
+
+        startPreviouslySelectedProgram();
 
         setSupportActionBar(beatToolbar);
         if (getSupportActionBar()!=null) {
@@ -154,12 +144,11 @@ public class BBeatActivity extends BaseActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_play_pause:
-                        item.setIcon(pause_time > 0 ? R.drawable.ic_action_play:R.drawable.ic_action_pause);
+                        item.setIcon(pause_time > 0 ? R.drawable.ic_action_pause:R.drawable.ic_action_play);
                         pauseOrResume();
                         break;
                     case R.id.action_visable:
                         setGraphicsEnabled(!vizEnabled);
-                        Log.e(TAG,"=====vizEnabled====="+vizEnabled);
                         item.setIcon(vizEnabled ? R.drawable.ic_action_visable:R.drawable.ic_action_visable_off);
                         break;
                 }
@@ -232,29 +221,13 @@ public class BBeatActivity extends BaseActivity {
      * 开始播放
      */
     private void startVoicePlayer() {
-        if (vp == null) {
-            vp = new VoicesPlayer();
-            vp.start();
+        if (mVoicesPlayer == null) {
+            mVoicesPlayer = new VoicesPlayer();
+            mVoicesPlayer.start();
         }
     }
-    /**
-     * 暂停播放
-     */
-    void stopVoicePlayer() {
-        try {
-            vp.shutdown();
-        } catch (Exception e) {
-        }
-        vp = null;
-    }
 
-    @Override
-    protected void onStop() {
 
-        stopVoicePlayer();
-        stopProgram();
-        super.onStop();
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -289,9 +262,9 @@ public class BBeatActivity extends BaseActivity {
             long delta = getClock() - pause_time;
             programFSM.catchUpAfterPause(delta);
             pause_time = -1;
-            unmuteAll();
+            unMuteAll();
         } else {
-                /* This is a pause time */
+            /* This is a pause time */
             pause_time = getClock();
             muteAll();
         }
@@ -326,21 +299,41 @@ public class BBeatActivity extends BaseActivity {
         saveConfig();
     }
 
+
     @Override
     protected void onDestroy() {
         EventBus.getDefault().unregister(this);
-        stopAllSounds();
+        stopVoicePlayer();
+        stopProgram();
         cancelAllNotifications();
         super.onDestroy();
     }
+    /**
+     * 暂停播放
+     */
+    void stopVoicePlayer() {
+        try {
+            mVoicesPlayer.shutdown();
+        } catch (Exception e) {
+        }
+        mVoicesPlayer = null;
+    }
+    private void stopProgram() {
+        if (programFSM != null) {
+            programFSM.stopProgram();
+            programFSM = null;
+        }
+        stopAllSounds();
+    }
+
     private void stopAllSounds() {
         // Stop all sounds
         for (StreamVoice v : playingStreams) {
             mSoundPool.stop(v.streamID);
         }
         playingStreams.clear();
-        if (vp != null) {
-            vp.stopVoices();
+        if (mVoicesPlayer != null) {
+            mVoicesPlayer.stopVoices();
         }
     }
 
@@ -352,50 +345,34 @@ public class BBeatActivity extends BaseActivity {
     }
 
 
-    private void selectProgram() {
+    private void startProgram() {
         if (programFSM != null) {
             programFSM.stopProgram();
         }
-        StartPreviouslySelectedProgram();
+        programFSM = new RunProgram(currentProgram, mHandler);
     }
 
-    private void StartPreviouslySelectedProgram() {
-        Program p = currentProgram;
-        currentProgram = null;
-        startNotification(p.getName());
-        glMode = p.doesUseGL();
+    private void startPreviouslySelectedProgram() {
+
+        startNotification(currentProgram.getName());
+
+        glMode = currentProgram.doesUseGL();
+
         if (glMode) {
             mVizV = new GLVizualizationView(getBaseContext());
         } else {
             mVizV = new CanvasVizualizationView(getBaseContext());
         }
-        mVizHolder.addView(mVizV);
 
+        mVizHolder.addView(mVizV);
         pause_time = -1;
-        programFSM = new RunProgram(p, mHandler);
+
+
         saveConfig();
-        // Start voice player thread
         startVoicePlayer();
     }
 
-    private void stopProgram() {
-        if (programFSM != null) {
-            programFSM.stopProgram();
-            programFSM = null;
-        }
-        stopAllSounds();
-    }
 
-    int play(int soundID, float leftVolume, float rightVolume, int priority, int loop, float rate) {
-        int id = mSoundPool.play(soundID, leftVolume * mSoundBeatVolume, rightVolume * mSoundBeatVolume,
-                priority, loop, rate);
-        playingStreams.add(new StreamVoice(id, leftVolume, rightVolume, loop, rate));
-        if (playingStreams.size() > MAX_STREAMS) {
-            StreamVoice v = playingStreams.remove(0);
-            mSoundPool.stop(v.streamID);
-        }
-        return id;
-    }
 
     void stop(int soundID) {
         mSoundPool.stop(soundID);
@@ -406,17 +383,28 @@ public class BBeatActivity extends BaseActivity {
      * Loop through all playing voices and set regular volume back
      */
     private void resetAllVolumes() {
+
+        Log.e(TAG,"resetAllVolumes  mSoundBGVolume:"+mSoundBGVolume);
+        Log.e(TAG,"resetAllVolumes  mSoundBeatVolume:"+mSoundBeatVolume);
+
+        Log.e(TAG,"playingBackground "+playingBackground);
+
         if (playingStreams != null && mSoundPool != null) {
             for (StreamVoice v : playingStreams) {
+                Log.e(TAG,"StreamVoice id："+v.streamID);
+
                 if (v.streamID == playingBackground) {
+                    Log.e(TAG,"resetAllVolumes  1");
                     mSoundPool.setVolume(v.streamID, v.leftVol * mSoundBGVolume, v.rightVol * mSoundBGVolume);
-                } else {
-                    mSoundPool.setVolume(v.streamID, v.leftVol * mSoundBeatVolume, v.rightVol * mSoundBeatVolume);
+                }
+                else {
+                    Log.e(TAG,"resetAllVolumes  2");
+                    mSoundPool.setVolume(v.streamID, v.leftVol * mSoundBGVolume, v.rightVol * mSoundBGVolume);
                 }
             }
         }
-        if (vp != null) {
-            vp.setVolume(mSoundBeatVolume);
+        if (mVoicesPlayer != null) {
+            mVoicesPlayer.setVolume(mSoundBeatVolume);
         }
     }
 
@@ -429,35 +417,62 @@ public class BBeatActivity extends BaseActivity {
                 mSoundPool.setVolume(v.streamID, 0, 0);
             }
         }
-        vp.setVolume(0);
+        mVoicesPlayer.setVolume(0);
     }
 
     /**
      * Loop through all playing voices and set volume back
      */
-    void unmuteAll() {
+    void unMuteAll() {
         resetAllVolumes();
     }
 
-    private void playBackgroundSample(SoundLoop background, float vol) {
+    private void playBackgroundSample(SoundLoop background, final float vol) {
+
+        Log.e(TAG,"playBackgroundSample:"+background);
+        Log.e(TAG,"vol:"+vol);
+        final int playSound;
         switch (background) {
             case WHITE_NOISE:
-                playingBackground = play(soundWhiteNoise, vol, vol, 2, -1, 1.0f);
+                playSound=soundWhiteNoise;
                 break;
             case UNITY:
-                playingBackground = play(soundUnity, vol, vol, 2, -1, 1.0f);
+                playSound=soundUnity;
                 break;
             case NONE:
-                playingBackground = -1;
+                playSound=-1;
+                playingBackground=-1;
                 break;
             default:
-                playingBackground = -1;
+                playSound=-1;
+                playingBackground=-1;
                 break;
         }
 
-        if (playingBackground != -1) {
-            mSoundPool.setVolume(playingBackground, vol * mSoundBGVolume, vol * mSoundBGVolume);
-        }
+        Log.e(TAG,"===playSound=="+playSound);
+        mSoundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+            @Override
+            public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
+
+                if (playSound!=-1){
+                    int id = mSoundPool.play(playSound, vol * mSoundBeatVolume, vol * mSoundBeatVolume,
+                            2, -1, 1.0f);
+
+                    playingStreams.add(new StreamVoice(id, vol * mSoundBeatVolume, vol* mSoundBeatVolume, -1, 1.0f));
+
+                    if (playingStreams.size() > MAX_STREAMS) {
+                        StreamVoice v = playingStreams.remove(0);
+                        mSoundPool.stop(v.streamID);
+                    }
+                    if (id!=-1){
+                        mSoundPool.setVolume(id, vol * mSoundBGVolume, vol * mSoundBGVolume);
+                        playingBackground=id;
+                    }
+                }
+            }
+        });
+
+
     }
 
     private void stopBackgroundSample() {
@@ -473,8 +488,8 @@ public class BBeatActivity extends BaseActivity {
      * @param voices list of voices to play
      */
     protected void playVoices(ArrayList<BinauralBeatVoice> voices) {
-        vp.playVoices(voices);
-        vp.setVolume(mSoundBeatVolume);
+        mVoicesPlayer.playVoices(voices);
+        mVoicesPlayer.setVolume(mSoundBeatVolume);
     }
 
     /**
@@ -495,20 +510,20 @@ public class BBeatActivity extends BaseActivity {
             freqs[i] = res;
             i++;
         }
-        if (doskew && vp!=null) {
+        if (doskew && mVoicesPlayer !=null) {
             float fade_period = Math.min(FADE_INOUT_PERIOD / 2, length / 2);
             if (length < FADE_INOUT_PERIOD) {
-                vp.setFade(1f);
+                mVoicesPlayer.setFade(1f);
             } else if (pos < fade_period) {
-                vp.setFade(FADE_MIN + pos / fade_period * (1f - FADE_MIN));
+                mVoicesPlayer.setFade(FADE_MIN + pos / fade_period * (1f - FADE_MIN));
             } else if (length - pos < fade_period) {
                 float fade = FADE_MIN + (length - pos) / fade_period * (1f - FADE_MIN);
-                vp.setFade(fade);
+                mVoicesPlayer.setFade(fade);
             }else {
-                vp.setFade(1f);
+                mVoicesPlayer.setFade(1f);
 
             }
-            vp.setFreqs(freqs);
+            mVoicesPlayer.setFreqs(freqs);
         }
         return res;
     }
@@ -517,8 +532,8 @@ public class BBeatActivity extends BaseActivity {
      * Go through all currently running beat voices and stop them
      */
     protected void stopAllVoices() {
-        if (vp!=null){
-            vp.stopVoices();
+        if (mVoicesPlayer !=null){
+            mVoicesPlayer.stopVoices();
         }
     }
 
@@ -530,7 +545,8 @@ public class BBeatActivity extends BaseActivity {
         private Program pR;
         private Iterator<Period> periodsIterator;
         private Period currentPeriod;
-        private long cT; // current Period start time
+        // current Period start time
+        private long cT;
         private long startTime;
         private long programLength;
         private String sProgramLength;
@@ -541,7 +557,7 @@ public class BBeatActivity extends BaseActivity {
         private Handler h;
         LineGraphView graphView;
 
-        private long _last_graph_update;
+        private long lastGraphUpdate;
 
         public RunProgram(Program pR, Handler h) {
             this.pR = pR;
@@ -554,7 +570,7 @@ public class BBeatActivity extends BaseActivity {
             format_INFO_TIMING_MIN_SEC = getString(R.string.time_format_min_sec);
             startTime = getClock();
             oldDelta = -1;
-            _last_graph_update = 0;
+            lastGraphUpdate = 0;
             s = eState.START;
             h.postDelayed(this, TIMER_FSM_DELAY);
         }
@@ -582,19 +598,22 @@ public class BBeatActivity extends BaseActivity {
             }
             ((VizualisationView) mVizV).setFrequency(p.getVoices().get(0).freqStart);
             playVoices(p.voices);
-            vp.setFade(FADE_MIN);
+            mVoicesPlayer.setFade(FADE_MIN);
             //播放背景
             playBackgroundSample(p.background, p.getBackgroundvol());
+            Log.e(TAG, String.format("New Period - duration %d", p.length));
         }
 
         private void inPeriod(long now, Period p, float pos) {
-            long delta = (now - startTime) / 50; // Do not refresh too often
+            // Do not refresh too often
+            long delta = (now - startTime) / 50;
             float freq = skewVoices(p.voices, pos, p.length, oldDelta != delta);
             ((VizualisationView) mVizV).setFrequency(freq);
             ((VizualisationView) mVizV).setProgress(pos);
             if (oldDelta != delta) {
                 oldDelta = delta;
-                delta = delta / 20; // Down to seconds
+                // Down to seconds
+                delta = delta / 20;
                 Status.setText(String.format(formatString,
                         freq,
                         formatTimeNumberWithLeadingZero((int) delta / 60),
@@ -664,19 +683,19 @@ public class BBeatActivity extends BaseActivity {
 
         private void updatePeriodGraph(long now) {
 
-            if (now >= _last_graph_update + GRAPH_VOICE_UPDATE) {
-                int viewstart = 0;
-                _last_graph_update = now;
+            if (now >= lastGraphUpdate + GRAPH_VOICE_UPDATE) {
+                int viewStart = 0;
+                lastGraphUpdate = now;
 
                 if (GRAPH_VOICE_SPAN < programLength) {
-                    viewstart = (int) Math.max(0, now - GRAPH_VOICE_VIEW_PAST);
+                    viewStart = (int) Math.max(0, now - GRAPH_VOICE_VIEW_PAST);
                 }
-                int viewsize = GRAPH_VOICE_SPAN;
+                int viewSize = GRAPH_VOICE_SPAN;
 
                 if (graphView != null) {
                     graphView.setDrawBackground(true);
                     graphView.setDrawBackgroundLimit(now);
-                    graphView.setViewPort(viewstart, viewsize);
+                    graphView.setViewPort(viewStart, viewSize);
                 }
             }
         }
@@ -712,11 +731,11 @@ public class BBeatActivity extends BaseActivity {
                     }
                 }
             };
-            graphView.addSeries(voiceSeries); // data
-            int viewstart = 0;
-            int viewsize = (int) Math.min(programLength, GRAPH_VOICE_SPAN);
+            graphView.addSeries(voiceSeries);
+            int viewStart = 0;
+            int viewSize = (int) Math.min(programLength, GRAPH_VOICE_SPAN);
             graphView.setManualYAxisBounds(((int) Math.ceil(maxFreq)), 0);
-            graphView.setViewPort(viewstart, viewsize);
+            graphView.setViewPort(viewStart, viewSize);
             graphView.setScrollable(true);
             graphView.setDrawBackground(false);
             mGraphVoices.removeAllViews();
@@ -779,13 +798,11 @@ public class BBeatActivity extends BaseActivity {
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
         SharedPreferences.Editor editor = settings.edit();
         editor.putBoolean(PREFS_VIZ, vizEnabled);
-//        editor.putLong(PREFS_NUM_STARTS, numStarts);
         editor.commit();
     }
 
     private void loadConfig() {
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
         vizEnabled = settings.getBoolean(PREFS_VIZ, true);
-//        numStarts = settings.getLong(PREFS_NUM_STARTS, 0);
     }
 }

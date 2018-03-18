@@ -8,13 +8,11 @@ import com.coder.binauralbeats.basemvp.MvpBasePresenter;
 import com.coder.binauralbeats.basemvp.MvpBaseView;
 
 public class WelcomeActivity extends BaseActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcom);
     }
-
     @Override
     protected int getLayout() {
         return 0;

@@ -37,7 +37,7 @@ public class Period implements Parcelable {
 	public SoundLoop background;
 	private float backgroundvol;
 
-	Visualization v;
+	private Visualization v;
 
 	boolean strechable;
 

@@ -4,10 +4,10 @@ package com.coder.binauralbeats.activity;
  * Created by TUS on 2018/3/14.
  */
 
-public class Event {
+public class BusEvent {
     String key;
     Object value;
-    Event(String key,Object value){
+    BusEvent(String key, Object value){
         this.key=key;
         this.value=value;
     }

@@ -23,7 +23,6 @@ import com.coder.binauralbeats.beats.ProgramMeta;
 import com.coder.binauralbeats.executor.NavigationMenuExecutor;
 import com.donkingliang.groupedadapter.adapter.GroupedRecyclerViewAdapter;
 import com.donkingliang.groupedadapter.holder.BaseViewHolder;
-import com.donkingliang.groupedadapter.widget.StickyHeaderLayout;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -39,8 +38,6 @@ public class HomeActivity extends BaseActivity
     Toolbar toolbar;
     @BindView(R.id.recyclerview)
     RecyclerView recyclerview;
-    @BindView(R.id.stickylayout)
-    StickyHeaderLayout stickylayout;
     @BindView(R.id.nav_view)
     NavigationView navView;
     @BindView(R.id.drawer_layout)
@@ -76,11 +73,10 @@ public class HomeActivity extends BaseActivity
             @Override
             public void onChildClick(GroupedRecyclerViewAdapter adapter, BaseViewHolder holder,
                                      int groupPosition, int childPosition) {
-
                 Program program=groups.get(groupPosition).getObjets().get(childPosition).getProgram();
                 Intent intent=new Intent(HomeActivity.this,BBeatActivity.class);
                 startActivity(intent);
-                EventBus.getDefault().postSticky(new Event("key",program));
+                EventBus.getDefault().postSticky(new BusEvent("key",program));
 
             }
         });

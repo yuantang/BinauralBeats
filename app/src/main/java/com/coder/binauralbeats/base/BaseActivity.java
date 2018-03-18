@@ -9,7 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.coder.binauralbeats.R;
-import com.coder.binauralbeats.activity.Event;
+import com.coder.binauralbeats.activity.BusEvent;
 import com.coder.binauralbeats.basemvp.MvpBasePresenter;
 import com.coder.binauralbeats.basemvp.MvpBaseView;
 import com.coder.binauralbeats.permission.PermissionReq;
@@ -55,7 +55,7 @@ public abstract class BaseActivity<V extends MvpBaseView, P extends MvpBasePrese
         super.onCreate(savedInstanceState);
     }
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void OnEventReceive(Event event) {
+    public void OnEventReceive(BusEvent event) {
 
     }
 

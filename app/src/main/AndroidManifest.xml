@@ -35,8 +35,9 @@
         </receiver>
 
         <activity android:name=".activity.WelcomeActivity" />
-        <activity android:name=".activity.PlayActivity" />
-        <activity android:name=".activity.BBeatActivity">
+        <activity android:name=".activity.BBeatActivity"
+            android:launchMode="singleTop"
+            >
         </activity>
     </application>
 
