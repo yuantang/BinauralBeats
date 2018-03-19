@@ -5,5 +5,13 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="colorWhite">#ffffff</color>
-    <color name="colorBlack">#666666</color>
+    <color name="white_96p">#F5FFFFFF</color>
+    <color name="colorBlack4">#444444</color>
+    <color name="colorBlack6">#666666</color>
+    <color name="colorBlack9">#999999</color>
+
+    <color name="grey_700_96p">#F5616161</color>
+    <color name="grey_300_96p">#F5E0E0E0</color>
+    <color name="grey_900">#212121</color>
+    <color name="grey_900_96p">#F5212121</color>
 </resources>

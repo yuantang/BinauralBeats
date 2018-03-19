@@ -33,7 +33,6 @@ import butterknife.BindView;
 
 public class HomeActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.recyclerview)
@@ -88,10 +87,8 @@ public class HomeActivity extends BaseActivity
 
         for (String pname: programs.keySet()) {
             ProgramMeta pm = programs.get(pname);
-
             String catname = pm.getCat().toString();
             CategoryGroup g = null;
-
 			/* Check if I already have a group with that name */
             for (CategoryGroup g2: groups) {
                 if (g2.getName().equals(catname)) {
@@ -100,7 +97,6 @@ public class HomeActivity extends BaseActivity
             }
             if (g == null) {
                 g = new CategoryGroup(catname);
-
                 try {
                     g.setNiceName(getString(R.string.class.getField("group_"+catname.toLowerCase()).getInt(null)));
                 } catch (Exception e) {

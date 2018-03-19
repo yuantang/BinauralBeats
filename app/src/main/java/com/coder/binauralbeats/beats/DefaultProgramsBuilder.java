@@ -69,8 +69,6 @@ import javax.xml.xpath.XPathFactory;
 
 
 public class DefaultProgramsBuilder {
-	
-	
 	/*
 	Meditation/Relaxation
 	Presets aimed at inducing a meditative and/or relaxed state of mind.
@@ -94,11 +92,6 @@ public class DefaultProgramsBuilder {
 		if (names != null)
 			return names;
 		names = new HashMap<>();
-		/*
-		 * Returns the public static methods of a class or interface, including
-		 * those declared in super classes and interfaces.
-		 */
-
 		Class<R.string> resourceStrings = R.string.class;
 		for (Method method : DefaultProgramsBuilder.class.getMethods()) {
 			if (Modifier.isStatic(method.getModifiers()) && method.getReturnType().isAssignableFrom(Program.class) && method.getName().matches("[A-Z0-9_]+")) {
@@ -123,7 +116,6 @@ public class DefaultProgramsBuilder {
 				}
 			}
 		}
-
 		return names;
 	}
 
@@ -227,9 +219,8 @@ public class DefaultProgramsBuilder {
 		p.addPeriod(new Period(120,SoundLoop.NONE, 0.6f, null).
 				addVoice( new BinauralBeatVoice(60f, 14f, 0.60f)).
 				addVoice( new BinauralBeatVoice(70f, 22f, 0.50f)).
-				setV(new Flash())
-		).
-				addPeriod(new Period(7200-120,SoundLoop.NONE,  0.6f, null).
+				setV(new Flash()))
+				.addPeriod(new Period(7200-120,SoundLoop.NONE,  0.6f, null).
 						addVoice( new BinauralBeatVoice(14f, 14f, 0.6f)).
 						addVoice( new BinauralBeatVoice(22f, 22f, 0.5f)).
 						addVoice( new BinauralBeatVoice(12f, 12f, 0.4f)).
@@ -294,9 +285,8 @@ public class DefaultProgramsBuilder {
 				addVoice( new BinauralBeatVoice(12f,	7.83f, 0.6f)).
 				addVoice( new BinauralBeatVoice(12f,	7.83f, 0.4f)).
 				addVoice( new BinauralBeatVoice(12f,	10f, 0.4f)).
-				setV(v)
-		).
-				addPeriod(new Period(900-120,SoundLoop.WHITE_NOISE, 0.4f, null).
+				setV(v))
+				.addPeriod(new Period(900-120,SoundLoop.WHITE_NOISE, 0.4f, null).
 						addVoice( new BinauralBeatVoice(7.83f, 7.83f, 0.6f)).
 						addVoice( new BinauralBeatVoice(7.83f, 7.83f, 0.4f)).
 						addVoice( new BinauralBeatVoice(10f, 10f, 0.4f)).
@@ -320,13 +310,11 @@ public class DefaultProgramsBuilder {
 
 		p.addPeriod(new Period(300,SoundLoop.WHITE_NOISE, 0.4f, null).
 				addVoice( new BinauralBeatVoice(12f,	7.83f, 0.6f)).
-				setV(v)
-		).
-				addPeriod(new Period(600,SoundLoop.WHITE_NOISE, 0.4f, null).
+				setV(v))
+				.addPeriod(new Period(600,SoundLoop.WHITE_NOISE, 0.4f, null).
 						addVoice(new BinauralBeatVoice(7.83f, 7.83f, 0.65f)).
-						setV(v)
-				).
-				addPeriod(new Period(300,SoundLoop.WHITE_NOISE, 0.4f, null).
+						setV(v))
+				.addPeriod(new Period(300,SoundLoop.WHITE_NOISE, 0.4f, null).
 						addVoice(new BinauralBeatVoice(7.83f, 12f, 0.6f)).
 						setV(v)
 				);
@@ -340,14 +328,12 @@ public class DefaultProgramsBuilder {
 				+ "A hard-backed chair without neck support is recommended to prevent falling asleep.");
 
 		p.setAuthor("@GiorgioRegni");
-
 		p.addPeriod(new Period(600,SoundLoop.WHITE_NOISE, 0.4f, null).
 				addVoice( new BinauralBeatVoice(15f,	10f, 0.65f)).
 				addVoice( new BinauralBeatVoice(15f,	10f, 0.65f)).
 				addVoice( new BinauralBeatVoice(15f,	10f, 0.65f)).
-				setV(new Starfield())
-		).
-				addPeriod(new Period(60*80,SoundLoop.WHITE_NOISE, 0.4f, null).
+				setV(new Starfield()))
+				.addPeriod(new Period(60*80,SoundLoop.WHITE_NOISE, 0.4f, null).
 						addVoice( new BinauralBeatVoice(10f, 10f, 0.60f)).
 						addVoice( new BinauralBeatVoice(10f, 10f, 0.60f)).
 						addVoice( new BinauralBeatVoice(10f, 10f, 0.60f)).
@@ -365,8 +351,6 @@ public class DefaultProgramsBuilder {
 				+ "As always use headphones.");
 
 		p.setAuthor("@GiorgioRegni");
-		//p.setGL();
-
 		p.addPeriod(new Period(120,SoundLoop.NONE, 0.2f, null).
 				addVoice( new BinauralBeatVoice(20f, 70f, 0.65f)).
 				addVoice( new BinauralBeatVoice(20f, 50f, 0.55f)).
@@ -395,29 +379,21 @@ public class DefaultProgramsBuilder {
 
 	public static Program STIMULATION_HALLUCINATION(Program p) {
 		p.setDescription("A fun preset that simulates psychedelic hallucinations.");
-
 		p.setAuthor("@GiorgioRegni");
-		//p.setGL();
-
 		p.addPeriod(new Period(600,SoundLoop.WHITE_NOISE, 0.2f, null).
 				addVoice( new BinauralBeatVoice(15f,	10f, 0.65f)).
 				addVoice( new BinauralBeatVoice(15f,	10f, 0.65f)).
 				addVoice( new BinauralBeatVoice(15f,	10f, 0.65f)).
 				setV(new LSD()));
-//				setV(new Plasma()));
-
 		return p;
 	}
 
 	public static Program SLEEP_SLEEP_INDUCTION( Program p) {
-
 		Visualization v = new None();
-
 		p.setDescription("Sleep induction for use about 15 mn before bedtime to help you fall asleep. "
 				+ "It^s a one hour programm, with 6mn drop into delta waves"
 				+ " followed by 54 mn of relaxing delta plateau");
 		p.setAuthor("@thegreenman");
-
 		p.addPeriod(new Period(360,SoundLoop.UNITY, 0.7f, null).
 				addVoice( new BinauralBeatVoice(9.7f, 3.4f, 0.6f)).
 				setV(v)
@@ -533,11 +509,8 @@ public class DefaultProgramsBuilder {
 
 		CanvasVisualization m = new Image(R.drawable.egg);
 
-		p.setDescription("Insomnia relief through stimulating Sensory Motor Rythm. "
-				+ "Don^t use it at bedtime, use it only during your insomnia, "
-				+ "for example if you wake up in the middle of the night and can�t go back to sleep "
-				+ "38 mn of crossing frequencies from 8 to 12 Hz");
-		p.setAuthor("@thegreenman);");
+		p.setDescription("Insomnia relief through stimulating Sensory Motor Rythm. Don\'t use it at bedtime, use it only during your insomnia, for example if you wake up in the middle of the night and can\'t go back to sleep 38 mn of crossing frequencies from 8 to 12 Hz.");
+		p.setAuthor("@thegreenman");
 
 		p.addPeriod(new Period(333,SoundLoop.NONE, 0.7f, null).
 				addVoice( new BinauralBeatVoice(8f, 8f, 0.6f)).

@@ -1,10 +1,12 @@
 package com.coder.binauralbeats.base;
 
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StyleRes;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -13,6 +15,7 @@ import com.coder.binauralbeats.activity.BusEvent;
 import com.coder.binauralbeats.basemvp.MvpBasePresenter;
 import com.coder.binauralbeats.basemvp.MvpBaseView;
 import com.coder.binauralbeats.permission.PermissionReq;
+import com.coder.binauralbeats.utils.Preferences;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -35,10 +38,14 @@ public abstract class BaseActivity<V extends MvpBaseView, P extends MvpBasePrese
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
+        if (Preferences.isNightMode()) {
+            setTheme(getDarkTheme());
+        }
+
         setContentView(getLayout());
         unbinder = ButterKnife.bind(this);
         EventBus.getDefault().register(this);
-
+        setVolumeControlStream(AudioManager.STREAM_MUSIC);
         if (this.mPresenter==null){
             this.mPresenter=createPresenter();
         }
@@ -58,7 +65,10 @@ public abstract class BaseActivity<V extends MvpBaseView, P extends MvpBasePrese
     public void OnEventReceive(BusEvent event) {
 
     }
-
+    @StyleRes
+    protected int getDarkTheme() {
+        return R.style.AppThemeDark;
+    }
     protected void setToolBar() {
         Toolbar mToolbar = findViewById(R.id.toolbar);
         if (mToolbar !=null){
