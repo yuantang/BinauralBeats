@@ -6,6 +6,7 @@ import com.coder.binauralbeats.R;
 import com.coder.binauralbeats.beats.CategoryGroup;
 import com.coder.binauralbeats.beats.Program;
 import com.coder.binauralbeats.beats.ProgramMeta;
+import com.coder.binauralbeats.utils.StringUtils;
 import com.donkingliang.groupedadapter.adapter.GroupedRecyclerViewAdapter;
 
 import java.util.ArrayList;
@@ -16,9 +17,10 @@ import java.util.ArrayList;
 public class GroupedListAdapter extends GroupedRecyclerViewAdapter {
 
     private ArrayList<CategoryGroup> mGroups;
-
+    private Context context;
     public GroupedListAdapter(Context context, ArrayList<CategoryGroup> groups) {
         super(context);
+        this.context=context;
         mGroups = groups;
     }
 
@@ -70,15 +72,11 @@ public class GroupedListAdapter extends GroupedRecyclerViewAdapter {
 
     @Override
     public void onBindChildViewHolder(com.donkingliang.groupedadapter.holder.BaseViewHolder holder, int groupPosition, int childPosition) {
-
         ProgramMeta entity = mGroups.get(groupPosition).getObjets().get(childPosition);
         Program p = entity.getProgram();
-        holder.setText(R.id.child_name_txt, p.getName()+"\n"+p.getAuthor()+"\n"+p.getLength()+"\n"+ p.getNumPeriods());
+        holder.setText(R.id.child_name_txt, p.getName());
+        holder.setText(R.id.child_author_txt,p.getAuthor());
+        holder.setText(R.id.child_length_txt, StringUtils.formatDuration(context,p.getLength()*1000));
         holder.setText(R.id.child_desc_txt,p.getDescription());
-
-
-//        String.format(" %sh%smin.",
-//                formatTimeNumberwithLeadingZero(length / 60 / 60),
-//                formatTimeNumberwithLeadingZero((length / 60) % 60))
     }
 }
