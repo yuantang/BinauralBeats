@@ -5,7 +5,6 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Handler;
@@ -37,6 +36,7 @@ import com.coder.binauralbeats.beats.VizualisationView;
 import com.coder.binauralbeats.beats.VoicesPlayer;
 import com.coder.binauralbeats.graphview.GraphView;
 import com.coder.binauralbeats.graphview.LineGraphView;
+import com.coder.binauralbeats.utils.Preferences;
 import com.coder.binauralbeats.viz.Black;
 import com.coder.binauralbeats.viz.GLBlack;
 
@@ -87,8 +87,7 @@ public class BBeatActivity extends BaseActivity {
     private static final float FADE_INOUT_PERIOD = 5f;
     private static final float FADE_MIN = 0.6f;
 
-    private static final String PREFS_NAME = "BBT";
-    private static final String PREFS_VIZ = "VIZ";
+
 
     private boolean glMode = false;
     private boolean vizEnabled = true;
@@ -111,12 +110,13 @@ public class BBeatActivity extends BaseActivity {
     protected void initEventAndData() {
        /* Init sounds */
         loadConfig();
+
         initSounds();
-        setVolumeControlStream(AudioManager.STREAM_MUSIC);
+
         mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
-
         BusEvent event = EventBus.getDefault().getStickyEvent(BusEvent.class);
+
         currentProgram = (Program) event.getValue();
 
         if (currentProgram==null) {
@@ -133,6 +133,7 @@ public class BBeatActivity extends BaseActivity {
             getSupportActionBar().setTitle(name);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
         beatToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -201,7 +202,6 @@ public class BBeatActivity extends BaseActivity {
         return null;
     }
 
-
     /**
      * 初始化背景音
      */
@@ -226,23 +226,11 @@ public class BBeatActivity extends BaseActivity {
             mVoicesPlayer.start();
         }
     }
-
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.bbeats, menu);
         return true;
     }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
 
     public boolean isPaused() {
         if (pause_time > 0) {
@@ -367,7 +355,6 @@ public class BBeatActivity extends BaseActivity {
         mVizHolder.addView(mVizV);
         pause_time = -1;
 
-
         saveConfig();
         startVoicePlayer();
     }
@@ -383,22 +370,9 @@ public class BBeatActivity extends BaseActivity {
      * Loop through all playing voices and set regular volume back
      */
     private void resetAllVolumes() {
-
-        Log.e(TAG,"resetAllVolumes  mSoundBGVolume:"+mSoundBGVolume);
-        Log.e(TAG,"resetAllVolumes  mSoundBeatVolume:"+mSoundBeatVolume);
-
-        Log.e(TAG,"playingBackground "+playingBackground);
-
         if (playingStreams != null && mSoundPool != null) {
             for (StreamVoice v : playingStreams) {
-                Log.e(TAG,"StreamVoice id："+v.streamID);
-
                 if (v.streamID == playingBackground) {
-                    Log.e(TAG,"resetAllVolumes  1");
-                    mSoundPool.setVolume(v.streamID, v.leftVol * mSoundBGVolume, v.rightVol * mSoundBGVolume);
-                }
-                else {
-                    Log.e(TAG,"resetAllVolumes  2");
                     mSoundPool.setVolume(v.streamID, v.leftVol * mSoundBGVolume, v.rightVol * mSoundBGVolume);
                 }
             }
@@ -428,9 +402,6 @@ public class BBeatActivity extends BaseActivity {
     }
 
     private void playBackgroundSample(SoundLoop background, final float vol) {
-
-        Log.e(TAG,"playBackgroundSample:"+background);
-        Log.e(TAG,"vol:"+vol);
         final int playSound;
         switch (background) {
             case WHITE_NOISE:
@@ -449,17 +420,13 @@ public class BBeatActivity extends BaseActivity {
                 break;
         }
 
-        Log.e(TAG,"===playSound=="+playSound);
         mSoundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
             @Override
             public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
-
                 if (playSound!=-1){
                     int id = mSoundPool.play(playSound, vol * mSoundBeatVolume, vol * mSoundBeatVolume,
                             2, -1, 1.0f);
-
                     playingStreams.add(new StreamVoice(id, vol * mSoundBeatVolume, vol* mSoundBeatVolume, -1, 1.0f));
-
                     if (playingStreams.size() > MAX_STREAMS) {
                         StreamVoice v = playingStreams.remove(0);
                         mSoundPool.stop(v.streamID);
@@ -471,8 +438,6 @@ public class BBeatActivity extends BaseActivity {
                 }
             }
         });
-
-
     }
 
     private void stopBackgroundSample() {
@@ -795,14 +760,10 @@ public class BBeatActivity extends BaseActivity {
     }
 
     private void saveConfig() {
-        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putBoolean(PREFS_VIZ, vizEnabled);
-        editor.commit();
+        Preferences.saveVizEnabled(vizEnabled);
+    }
+    private void loadConfig() {
+        vizEnabled= Preferences.isVizEnabled();
     }
 
-    private void loadConfig() {
-        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-        vizEnabled = settings.getBoolean(PREFS_VIZ, true);
-    }
 }
