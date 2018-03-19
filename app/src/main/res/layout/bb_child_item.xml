@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:text="1h30m"
-            android:drawablePadding="2dp"
+            android:drawablePadding="3dp"
             android:drawableLeft="@drawable/product_icon_time"
             >
         </TextView>

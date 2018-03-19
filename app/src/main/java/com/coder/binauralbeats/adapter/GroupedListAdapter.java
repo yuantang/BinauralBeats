@@ -6,6 +6,7 @@ import com.coder.binauralbeats.R;
 import com.coder.binauralbeats.beats.CategoryGroup;
 import com.coder.binauralbeats.beats.Program;
 import com.coder.binauralbeats.beats.ProgramMeta;
+import com.coder.binauralbeats.utils.ColorUtils;
 import com.coder.binauralbeats.utils.StringUtils;
 import com.donkingliang.groupedadapter.adapter.GroupedRecyclerViewAdapter;
 
@@ -68,6 +69,7 @@ public class GroupedListAdapter extends GroupedRecyclerViewAdapter {
     public void onBindHeaderViewHolder(com.donkingliang.groupedadapter.holder.BaseViewHolder holder, int groupPosition) {
         CategoryGroup entity = mGroups.get(groupPosition);
         holder.setText(R.id.group_title_txt, entity.getNiceName());
+        holder.setBackgroundColor(R.id.group_title_lly, ColorUtils.getColorPrimary(context));
     }
 
     @Override

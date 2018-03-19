@@ -21,18 +21,14 @@ public class Preferences {
     }
 
 
-
-
-
     public static boolean isNightMode() {
         return getBoolean(NIGHT_MODE, false);
     }
-
-    public static void saveVizEnabled(boolean on) {
+    public static void saveNightMode(boolean on) {
         saveBoolean(NIGHT_MODE, on);
     }
 
-    public static void saveNightMode(boolean on) {
+    public static void saveVizEnabled(boolean on) {
         saveBoolean(PREFS_VIZ, on);
     }
 

@@ -21,6 +21,7 @@ import com.coder.binauralbeats.beats.DefaultProgramsBuilder;
 import com.coder.binauralbeats.beats.Program;
 import com.coder.binauralbeats.beats.ProgramMeta;
 import com.coder.binauralbeats.executor.NavigationMenuExecutor;
+import com.coder.binauralbeats.utils.Preferences;
 import com.donkingliang.groupedadapter.adapter.GroupedRecyclerViewAdapter;
 import com.donkingliang.groupedadapter.holder.BaseViewHolder;
 
@@ -122,6 +123,7 @@ public class HomeActivity extends BaseActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.home, menu);
+//        menu.getItem(R.id.nav_theme).setTitle(Preferences.isNightMode()?"白天模式":"夜间模式");
         return true;
     }
     @Override
