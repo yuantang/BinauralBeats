@@ -134,6 +134,7 @@ public class BBeatActivity extends BaseActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
+        beatToolbar.getMenu().getItem(R.id.action_visable).setIcon(vizEnabled ? R.drawable.ic_action_visable:R.drawable.ic_action_visable_off);
         beatToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
