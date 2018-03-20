@@ -136,9 +136,8 @@ public class DefaultProgramsBuilder {
 	 */
 
 	public static Program HYPNOSIS_SELF_HYPNOSIS(Program p) {
-		p.setDescription("Short meditation preset to unite your conscious and subconscious mind. "
-				+ "It lasts 20mn : Glide down to theta waves, "
-				+ "plateau for 10mn then then slowly come back up to awake state");
+//		p.setDescription("Short meditation preset to unite your conscious and subconscious mind.It lasts 20mn : Glide down to theta waves, plateau for 10mn then then slowly come back up to awake state.");
+		p.setDescription(MyApp.getInstance().getString(R.string.program_self_hypnosis_desc));
 		p.setAuthor("@GiorgioRegni");
 
 		p.addPeriod(new Period(300, SoundLoop.WHITE_NOISE, 0.3f, null).
@@ -158,9 +157,9 @@ public class DefaultProgramsBuilder {
 	}
 
 	public static Program STIMULATION_HIGHEST_MENTAL_ACTIVITY(Program p) {
-		p.setDescription("A quick cafeine boost ! This preset shortly reaches Gamma waves, provides higher mental activity, including perception, problem solving, and consciousness. "
-				+ "It can be used whenever needed");
-		p.setAuthor("@GiorgioRegni");
+//		p.setDescription("A quick cafeine boost ! This preset shortly reaches Gamma waves, provides higher mental activity, including perception, problem solving, and consciousness.It can be used whenever needed");
+		p.setDescription(MyApp.getInstance().getString(R.string.program_highest_mental_activity_desc));
+			p.setAuthor("@GiorgioRegni");
 
 		p.addPeriod(new Period(120,SoundLoop.WHITE_NOISE, 0.3f, null).
 				addVoice( new BinauralBeatVoice(12f, 70f, 0.60f)).
@@ -178,9 +177,8 @@ public class DefaultProgramsBuilder {
 	}
 
 	public static Program MEDITATION_UNITY(Program p) {
-
-		p.setDescription("Wander in deep relaxing delta waves and let your mind explore freely and without bounds."
-				+" May induce dreamless sleep and loss of body awareness.");
+		p.setDescription(MyApp.getInstance().getString(R.string.program_unity_desc));
+//		p.setDescription("Wander in deep relaxing delta waves and let your mind explore freely and without bounds. May induce dreamless sleep and loss of body awareness.");
 		p.setAuthor("@GiorgioRegni");
 
 		p.addPeriod(new Period(3600,SoundLoop.UNITY,  0.5f, null).
@@ -194,9 +192,8 @@ public class DefaultProgramsBuilder {
 	}
 
 	public static Program HEALING_MORPHINE(Program p) {
-
-		p.setDescription("A relaxing, southing mix of beats that slowly but surely appease any pain point."
-				+ " The brain runs the body as you will discover with this preset.");
+		p.setDescription(MyApp.getInstance().getString(R.string.program_morphine_desc));
+//		p.setDescription("A relaxing, southing mix of beats that slowly but surely appease any pain point. The brain runs the body as you will discover with this preset.");
 		p.setAuthor("@GiorgioRegni");
 
 		// From http://www.bwgen.com/presets/desc263.htm
@@ -213,8 +210,8 @@ public class DefaultProgramsBuilder {
 	}
 
 	public static Program LEARNING_LEARNING(Program p) {
-
-		p.setDescription("A 2h preset that enhances learning, increases ability to concentrate and think clearly, reduces unwillingness to work.  Students can't get enough of this program! This one is to be listened while studying. ");
+		p.setDescription(MyApp.getInstance().getString(R.string.program_learning_desc));
+//		p.setDescription("A 2h preset that enhances learning, increases ability to concentrate and think clearly, reduces unwillingness to work. Students can't get enough of this program! This one is to be listened while studying. ");
 		p.setAuthor("@GiorgioRegni");
 		p.addPeriod(new Period(120,SoundLoop.NONE, 0.6f, null).
 				addVoice( new BinauralBeatVoice(60f, 14f, 0.60f)).
@@ -232,8 +229,8 @@ public class DefaultProgramsBuilder {
 	}
 
 	public static Program STIMULATION_CREATIVITY(Program p) {
-		p.setDescription("It^s a 20mn meditation preset to assist in Creative Thinking "
-				+ "It begins at 10hz then varying from 8 to 6 hz with a glide back to 8hz at the end");
+		p.setDescription(MyApp.getInstance().getString(R.string.program_creativity_desc));
+//		p.setDescription("It^s a 20mn meditation preset to assist in Creative Thinking It begins at 10hz then varying from 8 to 6 hz with a glide back to 8hz at the end");
 		p.setAuthor("@thegreenman");
 
 		p.addPeriod(new Period(15,SoundLoop.WHITE_NOISE, 0.4f, null).
@@ -274,10 +271,8 @@ public class DefaultProgramsBuilder {
 
 	public static Program MEDITATION_WAKEFULRELAX(Program p) {
 		Visualization v = new None();
-
-		p.setDescription("This presets stimulates a wakeful relaxation state with closed eyes. "
-				+ "Zen-trained meditation masters produce noticeably more alpha waves during meditation."
-				+ "To be used in short 10 to 15 minutes doses to calm down and concentrate when needed.");
+		p.setDescription(MyApp.getInstance().getString(R.string.program_wakefulrelax_desc));
+//		p.setDescription("This presets stimulates a wakeful relaxation state with closed eyes. Zen-trained meditation masters produce noticeably more alpha waves during meditation.To be used in short 10 to 15 minutes doses to calm down and concentrate when needed.");
 
 		p.setAuthor("@GiorgioRegni");
 
@@ -300,11 +295,8 @@ public class DefaultProgramsBuilder {
 
 	public static Program MEDITATION_SCHUMANN_RESONANCE(Program p) {
 		Visualization v = new Image(R.drawable.warp);
-
-		p.setDescription("A meditation to put your mind in balance with the Earth." +
-				" Glide down to Schumann Resonance, low frequency portion of the Earth's electromagnetic field," +
-				" resonate for 10 minutes then" +
-				" slowly come back up to awake state.");
+		p.setDescription(MyApp.getInstance().getString(R.string.program_schumann_resonance_desc));
+//		p.setDescription("A meditation to put your mind in balance with the Earth. Glide down to Schumann Resonance, low frequency portion of the Earth's electromagnetic field, resonate for 10 minutes then slowly come back up to awake state.");
 
 		p.setAuthor("@thegreenman");
 
@@ -323,10 +315,8 @@ public class DefaultProgramsBuilder {
 	}
 
 	public static Program OOBE_ASTRAL_01_RELAX(Program p) {
-		p.setDescription("From the book Mastering Astral Projection, Week 1: Relaxation. "
-				+ "Use a low to medium sound level, sit in a quiet place, and listen to the preset with eyes closed. "
-				+ "A hard-backed chair without neck support is recommended to prevent falling asleep.");
-
+//		p.setDescription("From the book Mastering Astral Projection, Week 1: Relaxation. Use a low to medium sound level, sit in a quiet place, and listen to the preset with eyes closed. A hard-backed chair without neck support is recommended to prevent falling asleep.");
+		p.setDescription(MyApp.getInstance().getString(R.string.program_astral_01_relax_desc));
 		p.setAuthor("@GiorgioRegni");
 		p.addPeriod(new Period(600,SoundLoop.WHITE_NOISE, 0.4f, null).
 				addVoice( new BinauralBeatVoice(15f,	10f, 0.65f)).
@@ -346,10 +336,8 @@ public class DefaultProgramsBuilder {
 
 	public static Program STIMULATION_HIIT(Program p) {
 		Hiit v = new Hiit();
-		p.setDescription("This preset is based on a Tabata HIIT protocol, it helps you give your maximum during work periods and recover quicker during rest periods. "
-				+ "Starts with 2 minutes warm up then 8 times 20 secs work, 10 secs rest followed by 2 minutes  of cool down. "
-				+ "As always use headphones.");
-
+		p.setDescription(MyApp.getInstance().getString(R.string.program_hiit_desc));
+//		p.setDescription("This preset is based on a Tabata HIIT protocol, it helps you give your maximum during work periods and recover quicker during rest periods.Starts with 2 minutes warm up then 8 times 20 secs work, 10 secs rest followed by 2 minutes  of cool down. As always use headphones.");
 		p.setAuthor("@GiorgioRegni");
 		p.addPeriod(new Period(120,SoundLoop.NONE, 0.2f, null).
 				addVoice( new BinauralBeatVoice(20f, 70f, 0.65f)).
@@ -378,7 +366,8 @@ public class DefaultProgramsBuilder {
 	}
 
 	public static Program STIMULATION_HALLUCINATION(Program p) {
-		p.setDescription("A fun preset that simulates psychedelic hallucinations.");
+		p.setDescription(MyApp.getInstance().getString(R.string.program_hallucination_desc));
+//		p.setDescription("A fun preset that simulates psychedelic hallucinations.");
 		p.setAuthor("@GiorgioRegni");
 		p.addPeriod(new Period(600,SoundLoop.WHITE_NOISE, 0.2f, null).
 				addVoice( new BinauralBeatVoice(15f,	10f, 0.65f)).
@@ -390,9 +379,8 @@ public class DefaultProgramsBuilder {
 
 	public static Program SLEEP_SLEEP_INDUCTION( Program p) {
 		Visualization v = new None();
-		p.setDescription("Sleep induction for use about 15 mn before bedtime to help you fall asleep. "
-				+ "It^s a one hour programm, with 6mn drop into delta waves"
-				+ " followed by 54 mn of relaxing delta plateau");
+		p.setDescription(MyApp.getInstance().getString(R.string.program_sleep_induction_desc));
+		p.setDescription("Sleep induction for use about 15 mn before bedtime to help you fall asleep. It^s a one hour programm, with 6mn drop into delta waves followed by 54 mn of relaxing delta plateau");
 		p.setAuthor("@thegreenman");
 		p.addPeriod(new Period(360,SoundLoop.UNITY, 0.7f, null).
 				addVoice( new BinauralBeatVoice(9.7f, 3.4f, 0.6f)).
@@ -410,8 +398,8 @@ public class DefaultProgramsBuilder {
 	public static Program OOBE_LUCID_DREAMS( Program p) {
 
 		Visualization m = new Black();
-		p.setDescription("This preset stimulates lucid dreaming. It has to be played while sleeping, it is recommend during a nap, while seated in a chair or sofa to prevent falling fully asleep."
-				+ " 5hz base frequency with 8 hz spikes");
+		p.setDescription(MyApp.getInstance().getString(R.string.program_lucid_dreams_desc));
+//		p.setDescription("This preset stimulates lucid dreaming. It has to be played while sleeping, it is recommend during a nap, while seated in a chair or sofa to prevent falling fully asleep. 5hz base frequency with 8 hz spikes");
 		p.setAuthor("@thegreenman");
 
 		p.addPeriod(new Period(60,SoundLoop.NONE, 0.7f, null).
@@ -486,9 +474,8 @@ public class DefaultProgramsBuilder {
 
 	public static Program MEDITATION_SHAMANIC_RHYTHM(Program p) {
 		Visualization v = new None();
-
-		p.setDescription("Shamanic Drum Rhythm" +
-				"Begin at 9hz then glide down to 4.5hz for 50 minutes and back up at the end.");
+		p.setDescription(MyApp.getInstance().getString(R.string.program_shamanic_rhythm_desc));
+//		p.setDescription("Shamanic Drum Rhythm Begin at 9hz then glide down to 4.5hz for 50 minutes and back up at the end.");
 		p.setAuthor("@thegreenman");
 
 		p.addPeriod(new Period(300,SoundLoop.WHITE_NOISE, 0.7f, null).
@@ -508,8 +495,8 @@ public class DefaultProgramsBuilder {
 	public static Program SLEEP_SMR(Program p) {
 
 		CanvasVisualization m = new Image(R.drawable.egg);
-
-		p.setDescription("Insomnia relief through stimulating Sensory Motor Rythm. Don\'t use it at bedtime, use it only during your insomnia, for example if you wake up in the middle of the night and can\'t go back to sleep 38 mn of crossing frequencies from 8 to 12 Hz.");
+		p.setDescription(MyApp.getInstance().getString(R.string.program_smr_desc));
+//		p.setDescription("Insomnia relief through stimulating Sensory Motor Rythm. Don\'t use it at bedtime, use it only during your insomnia, for example if you wake up in the middle of the night and can\'t go back to sleep 38 mn of crossing frequencies from 8 to 12 Hz.");
 		p.setAuthor("@thegreenman");
 
 		p.addPeriod(new Period(333,SoundLoop.NONE, 0.7f, null).
@@ -545,26 +532,10 @@ public class DefaultProgramsBuilder {
 		return p;
 	}
 
-	public static Program SLEEP_POWERNAP(Program p) {
-		Program p2 =fromGnauralFactory(readRawTextFile(R.raw.powernap));
-		p2.name = p.name;
-		return p2;
-	}
-
-
-	public static Program SLEEP_AIRPLANETRAVELAID(Program p) {
-		Program p2 =fromGnauralFactory(readRawTextFile(R.raw.airplanetravelaid));
-		p2.name = p.name;
-		return p2;
-	}
-
-
-
 	public static Program OOBE_LUCID_DREAMS_2(Program p) {
 		Visualization v = new Aurora();
-
-		p.setDescription("Sleep Induction and Lucid Dreams 2" +
-				"Sleep Induction into a longer lucid dreaming program");
+		p.setDescription(MyApp.getInstance().getString(R.string.program_lucid_dreams_2_desc));
+//		p.setDescription("Sleep Induction and Lucid Dreams 2 Sleep Induction into a longer lucid dreaming program");
 		p.setAuthor("@thegreenman");
 
 		p.addPeriod(new Period(600,SoundLoop.UNITY, 0.7f, null).
@@ -674,8 +645,8 @@ public class DefaultProgramsBuilder {
 
 	public static Program STIMULATION_ADHD(Program p) {
 		Visualization v = new HypnoFlash();
-
-		p.setDescription("This preset is an aid for Attention Deficit Hyperactivity Disorder. It lasts 30mn and alternates between 12 and 20 hz. It can be used whenever needed");
+		p.setDescription(MyApp.getInstance().getString(R.string.program_adhd_desc));
+//		p.setDescription("This preset is an aid for Attention Deficit Hyperactivity Disorder. It lasts 30mn and alternates between 12 and 20 hz. It can be used whenever needed");
 		p.setAuthor("@thegreenman");
 
 		p.addPeriod(new Period(300,SoundLoop.WHITE_NOISE, 0.7f, null).
@@ -704,6 +675,17 @@ public class DefaultProgramsBuilder {
 		);
 
 		return p;
+	}
+	public static Program SLEEP_POWERNAP(Program p) {
+		Program p2 =fromGnauralFactory(readRawTextFile(R.raw.powernap));
+		p2.name = p.name;
+		return p2;
+	}
+
+	public static Program SLEEP_AIRPLANETRAVELAID(Program p) {
+		Program p2 =fromGnauralFactory(readRawTextFile(R.raw.airplanetravelaid));
+		p2.name = p.name;
+		return p2;
 	}
 
 
