@@ -31,7 +31,6 @@ public class Preferences {
     public static void saveVizEnabled(boolean on) {
         saveBoolean(PREFS_VIZ, on);
     }
-
     public static boolean isVizEnabled() {
         return getBoolean(PREFS_VIZ, false);
     }

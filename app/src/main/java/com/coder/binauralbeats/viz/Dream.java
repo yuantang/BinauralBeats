@@ -26,11 +26,10 @@ import com.coder.binauralbeats.R;
  */
 
 
+public class Dream extends Image {
 
-public class None extends Image {
-
-	public None() {
-		super(R.drawable.none);
+	public Dream() {
+		super(R.drawable.dream);
 	}
 
 }

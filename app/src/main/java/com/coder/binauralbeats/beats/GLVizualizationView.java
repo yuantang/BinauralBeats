@@ -70,15 +70,18 @@ public class GLVizualizationView extends GLSurfaceView implements GLSurfaceView.
 
 
 
+	@Override
 	public void stopVisualization() {
 		this.v = null;
 		drawClear();
 	}
 	
+	@Override
 	public void setProgress(float pos) {
 		this.pos = pos;
 	}
 	
+	@Override
 	public void setFrequency(float freq) {
 		if (v != null)
 			v.setFrequency(freq);
@@ -88,9 +91,11 @@ public class GLVizualizationView extends GLSurfaceView implements GLSurfaceView.
 	}
 	
 
+	@Override
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
 	}
 
+	@Override
 	public void onSurfaceChanged(GL10 gl, int w, int h) {
 		width = w;
 		height = h;
@@ -98,6 +103,7 @@ public class GLVizualizationView extends GLSurfaceView implements GLSurfaceView.
 		this.gl = gl;
 	}
 
+	@Override
 	public void onDrawFrame(GL10 gl) {
 		
 		long now = System.nanoTime();

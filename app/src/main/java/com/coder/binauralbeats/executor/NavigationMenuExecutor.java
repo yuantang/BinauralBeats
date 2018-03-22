@@ -20,13 +20,15 @@ public class NavigationMenuExecutor {
         switch (id){
             case R.id.nav_theme:
                 nightMode((Activity) context);
-//                item.setTitle(Preferences.isNightMode()?"白天模式":"夜间模式");
-                break;
+                 break;
             case R.id.nav_share:
                 Intent textIntent = new Intent(Intent.ACTION_SEND);
                 textIntent.setType("text/plain");
                 textIntent.putExtra(Intent.EXTRA_TEXT, "这是一段分享的文字");
                 context.startActivity(Intent.createChooser(textIntent, "分享"));
+                return true;
+            case R.id.nav_send:
+
                 return true;
             case R.id.nav_about:
 
@@ -36,6 +38,11 @@ public class NavigationMenuExecutor {
     }
     private static void nightMode(final Activity activity) {
         Preferences.saveNightMode(!Preferences.isNightMode());
-        activity.recreate();
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                activity.recreate();
+            }
+        });
     }
 }

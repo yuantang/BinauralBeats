@@ -37,8 +37,6 @@ import java.util.Random;
 
 public class Starfield3D implements CanvasVisualization {
 
-
-	
 	private static final int NUM_STARS = 191;
 	private static final int MOD_PERIOD = 47;
 	private static final int COLOR_BG = Color.rgb(0, 0, 0);

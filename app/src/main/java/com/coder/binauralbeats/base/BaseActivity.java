@@ -11,7 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.coder.binauralbeats.R;
-import com.coder.binauralbeats.activity.BusEvent;
+import com.coder.binauralbeats.event.BusEvent;
 import com.coder.binauralbeats.basemvp.MvpBasePresenter;
 import com.coder.binauralbeats.basemvp.MvpBaseView;
 import com.coder.binauralbeats.permission.PermissionReq;

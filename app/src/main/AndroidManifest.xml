@@ -16,7 +16,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.HomeActivity"
+            android:name=".activity.home.HomeActivity"
             android:alwaysRetainTaskState="true"
             android:label="@string/app_name"
             android:launchMode="singleTop"

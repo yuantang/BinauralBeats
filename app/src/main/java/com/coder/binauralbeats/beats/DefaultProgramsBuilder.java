@@ -159,7 +159,7 @@ public class DefaultProgramsBuilder {
 	public static Program STIMULATION_HIGHEST_MENTAL_ACTIVITY(Program p) {
 //		p.setDescription("A quick cafeine boost ! This preset shortly reaches Gamma waves, provides higher mental activity, including perception, problem solving, and consciousness.It can be used whenever needed");
 		p.setDescription(MyApp.getInstance().getString(R.string.program_highest_mental_activity_desc));
-			p.setAuthor("@GiorgioRegni");
+		p.setAuthor("@GiorgioRegni");
 
 		p.addPeriod(new Period(120,SoundLoop.WHITE_NOISE, 0.3f, null).
 				addVoice( new BinauralBeatVoice(12f, 70f, 0.60f)).
@@ -380,7 +380,7 @@ public class DefaultProgramsBuilder {
 	public static Program SLEEP_SLEEP_INDUCTION( Program p) {
 		Visualization v = new None();
 		p.setDescription(MyApp.getInstance().getString(R.string.program_sleep_induction_desc));
-		p.setDescription("Sleep induction for use about 15 mn before bedtime to help you fall asleep. It^s a one hour programm, with 6mn drop into delta waves followed by 54 mn of relaxing delta plateau");
+//		p.setDescription("Sleep induction for use about 15 mn before bedtime to help you fall asleep. It^s a one hour programm, with 6mn drop into delta waves followed by 54 mn of relaxing delta plateau");
 		p.setAuthor("@thegreenman");
 		p.addPeriod(new Period(360,SoundLoop.UNITY, 0.7f, null).
 				addVoice( new BinauralBeatVoice(9.7f, 3.4f, 0.6f)).
@@ -398,6 +398,7 @@ public class DefaultProgramsBuilder {
 	public static Program OOBE_LUCID_DREAMS( Program p) {
 
 		Visualization m = new Black();
+//		Visualization m = new Dream();
 		p.setDescription(MyApp.getInstance().getString(R.string.program_lucid_dreams_desc));
 //		p.setDescription("This preset stimulates lucid dreaming. It has to be played while sleeping, it is recommend during a nap, while seated in a chair or sofa to prevent falling fully asleep. 5hz base frequency with 8 hz spikes");
 		p.setAuthor("@thegreenman");
@@ -677,13 +678,13 @@ public class DefaultProgramsBuilder {
 		return p;
 	}
 	public static Program SLEEP_POWERNAP(Program p) {
-		Program p2 =fromGnauralFactory(readRawTextFile(R.raw.powernap));
+		Program p2 =fromGnauralFactory(readRawTextFile(R.raw.powernap),"powernap");
 		p2.name = p.name;
 		return p2;
 	}
 
 	public static Program SLEEP_AIRPLANETRAVELAID(Program p) {
-		Program p2 =fromGnauralFactory(readRawTextFile(R.raw.airplanetravelaid));
+		Program p2 =fromGnauralFactory(readRawTextFile(R.raw.airplanetravelaid),"airplanetravelaid");
 		p2.name = p.name;
 		return p2;
 	}
@@ -722,7 +723,7 @@ public class DefaultProgramsBuilder {
 
 		throw new RuntimeException(String.format("Missing category in program %s", name));
 	}
-	public static Program fromGnauralFactory(String data) {
+	public static Program fromGnauralFactory(String data,String key) {
 		Program p = null;
 		Visualization v =  new None();
 
@@ -735,10 +736,18 @@ public class DefaultProgramsBuilder {
 			Document doc = db.parse(new InputSource(new StringReader(data)));
 
 			XPath xpath = XPathFactory.newInstance().newXPath();
-			String title = (String) xpath.evaluate("/schedule/title/text()", doc, XPathConstants.STRING);
-			String descr = (String) xpath.evaluate("/schedule/schedule_description/text()", doc, XPathConstants.STRING);
-			String author = (String) xpath.evaluate("/schedule/author/text()", doc, XPathConstants.STRING);
+			String title = null; //= (String) xpath.evaluate("/schedule/title/text()", doc, XPathConstants.STRING);
+			String descr = null;//= (String) xpath.evaluate("/schedule/schedule_description/text()", doc, XPathConstants.STRING);
 
+			if ("powernap".equals(key)){
+				title=MyApp.getInstance().getString(R.string.program_powernap);
+				descr=MyApp.getInstance().getString(R.string.program_powernap_desc);
+			}else if ("airplanetravelaid".equals(key)){
+				title=MyApp.getInstance().getString(R.string.program_airplanetravelaid);
+				descr=MyApp.getInstance().getString(R.string.program_airplanetravelaid_desc);
+			}
+
+			String author = (String) xpath.evaluate("/schedule/author/text()", doc, XPathConstants.STRING);
 			p = new Program(title);
 			p.setDescription(descr);
 			p.setAuthor(author);
@@ -762,10 +771,8 @@ public class DefaultProgramsBuilder {
 				Period period = new Period(len, SoundLoop.WHITE_NOISE, 0.1f, null).
 						addVoice(voice).
 						setV(v);
-
 				if (oldPeriod != null)
 					oldPeriod.getVoices().get(0).freqEnd = voice.freqStart;
-
 				p.addPeriod(period);
 
 				oldPeriod = period;

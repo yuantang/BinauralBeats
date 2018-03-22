@@ -34,6 +34,7 @@ import com.coder.binauralbeats.beats.StreamVoice;
 import com.coder.binauralbeats.beats.Visualization;
 import com.coder.binauralbeats.beats.VizualisationView;
 import com.coder.binauralbeats.beats.VoicesPlayer;
+import com.coder.binauralbeats.event.BusEvent;
 import com.coder.binauralbeats.graphview.GraphView;
 import com.coder.binauralbeats.graphview.LineGraphView;
 import com.coder.binauralbeats.utils.Preferences;
@@ -87,8 +88,6 @@ public class BBeatActivity extends BaseActivity {
     private static final float FADE_INOUT_PERIOD = 5f;
     private static final float FADE_MIN = 0.6f;
 
-
-
     private boolean glMode = false;
     private boolean vizEnabled = true;
     /**节拍音频大小*/
@@ -129,12 +128,12 @@ public class BBeatActivity extends BaseActivity {
         startPreviouslySelectedProgram();
 
         setSupportActionBar(beatToolbar);
+
         if (getSupportActionBar()!=null) {
             getSupportActionBar().setTitle(name);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        beatToolbar.getMenu().getItem(R.id.action_visable).setIcon(vizEnabled ? R.drawable.ic_action_visable:R.drawable.ic_action_visable_off);
         beatToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -227,10 +226,19 @@ public class BBeatActivity extends BaseActivity {
             mVoicesPlayer.start();
         }
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.bbeats, menu);
         return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        menu.findItem(R.id.action_visable).setIcon(vizEnabled ? R.drawable.ic_action_visable:R.drawable.ic_action_visable_off);
+
+        return super.onPrepareOptionsMenu(menu);
     }
 
     public boolean isPaused() {
@@ -246,7 +254,6 @@ public class BBeatActivity extends BaseActivity {
      * 暂停控制
      */
     public void pauseOrResume() {
-
         if (pause_time > 0) {
             long delta = getClock() - pause_time;
             programFSM.catchUpAfterPause(delta);
@@ -257,11 +264,9 @@ public class BBeatActivity extends BaseActivity {
             pause_time = getClock();
             muteAll();
         }
-
     }
 
     private void setGraphicsEnabled(boolean on) {
-
         if (vizEnabled && on == false) {
             // Disable Viz
             Period p = programFSM.getCurrentPeriod();
@@ -327,8 +332,6 @@ public class BBeatActivity extends BaseActivity {
     }
 
 
-
-
     private void cancelAllNotifications() {
         mNotificationManager.cancelAll();
     }
@@ -359,8 +362,6 @@ public class BBeatActivity extends BaseActivity {
         saveConfig();
         startVoicePlayer();
     }
-
-
 
     void stop(int soundID) {
         mSoundPool.stop(soundID);
@@ -471,7 +472,7 @@ public class BBeatActivity extends BaseActivity {
         for (BinauralBeatVoice v : voices) {
             float ratio = (v.freqEnd - v.freqStart) / length;
             if (res == -1) {
-                res = ratio * pos + v.freqStart; // Only set res for the first voice
+                res = ratio * pos + v.freqStart;
             }
             freqs[i] = res;
             i++;
@@ -722,29 +723,15 @@ public class BBeatActivity extends BaseActivity {
         Toast.makeText(this, getString(id), Toast.LENGTH_SHORT).show();
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     private void startNotification(String programName) {
         NotificationManager manager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
         Notification.Builder builder = new Notification.Builder(this);//新建Notification.Builder对象
         PendingIntent intent = PendingIntent.getActivity(this, 0, new Intent(this, BBeatActivity.class), 0);
+
+//        RemoteViews view = new RemoteViews(getPackageName(),R.layout.layout_notification);
+
+
+
         //PendingIntent点击通知后所跳转的页面
         builder.setContentTitle(getString(R.string.notif_started));
         builder.setContentText(getString(R.string.notif_descr, programName));
@@ -754,12 +741,12 @@ public class BBeatActivity extends BaseActivity {
         notification.flags |= Notification.FLAG_ONGOING_EVENT | Notification.FLAG_NO_CLEAR;
         manager.notify(1, notification);//运行notification
 
-    }
 
+
+    }
     private long getClock() {
         return SystemClock.elapsedRealtime();
     }
-
     private void saveConfig() {
         Preferences.saveVizEnabled(vizEnabled);
     }

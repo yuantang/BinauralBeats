@@ -19,12 +19,14 @@ public class GroupedListAdapter extends GroupedRecyclerViewAdapter {
 
     private ArrayList<CategoryGroup> mGroups;
     private Context context;
-    public GroupedListAdapter(Context context, ArrayList<CategoryGroup> groups) {
+    public GroupedListAdapter(Context context) {
         super(context);
         this.context=context;
-        mGroups = groups;
     }
-
+   public void upData(ArrayList<CategoryGroup> groups){
+       this.mGroups = groups;
+       notifyDataSetChanged();
+    }
     @Override
     public int getGroupCount() {
         return mGroups == null ? 0 : mGroups.size();
