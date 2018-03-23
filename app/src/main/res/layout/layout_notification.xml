@@ -2,7 +2,8 @@
     android:id="@+id/status_bar_latest_event_content"
     android:layout_width="match_parent"
     android:layout_height="64dp"
-    android:background="?android:windowBackground">
+    android:background="?android:windowBackground"
+    >
 
     <ImageView
         android:id="@+id/icon"

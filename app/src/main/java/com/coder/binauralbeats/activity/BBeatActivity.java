@@ -3,8 +3,10 @@ package com.coder.binauralbeats.activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Handler;
@@ -16,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RemoteViews;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -190,6 +193,9 @@ public class BBeatActivity extends BaseActivity {
                 resetAllVolumes();
             }
         });
+        IntentFilter intentFilter=new IntentFilter();
+        intentFilter.addAction("play");
+        registerReceiver(broadcastReceiver,intentFilter);
     }
 
     @Override
@@ -235,9 +241,7 @@ public class BBeatActivity extends BaseActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-
         menu.findItem(R.id.action_visable).setIcon(vizEnabled ? R.drawable.ic_action_visable:R.drawable.ic_action_visable_off);
-
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -300,6 +304,7 @@ public class BBeatActivity extends BaseActivity {
         stopVoicePlayer();
         stopProgram();
         cancelAllNotifications();
+        unregisterReceiver(broadcastReceiver);
         super.onDestroy();
     }
     /**
@@ -449,22 +454,13 @@ public class BBeatActivity extends BaseActivity {
         playingBackground = -1;
     }
 
-    /**
-     * Go through a list of voices and start playing them with their start frequency
-     *
-     * @param voices list of voices to play
-     */
+
     protected void playVoices(ArrayList<BinauralBeatVoice> voices) {
         mVoicesPlayer.playVoices(voices);
         mVoicesPlayer.setVolume(mSoundBeatVolume);
     }
 
-    /**
-     * @param voices
-     * @param pos
-     * @param length
-     * @return beat frequency of first voice
-     */
+
     protected float skewVoices(ArrayList<BinauralBeatVoice> voices, float pos, float length, boolean doskew) {
         int i = 0;
         float res = -1;
@@ -495,9 +491,6 @@ public class BBeatActivity extends BaseActivity {
         return res;
     }
 
-    /**
-     * Go through all currently running beat voices and stop them
-     */
     protected void stopAllVoices() {
         if (mVoicesPlayer !=null){
             mVoicesPlayer.stopVoices();
@@ -723,23 +716,29 @@ public class BBeatActivity extends BaseActivity {
         Toast.makeText(this, getString(id), Toast.LENGTH_SHORT).show();
     }
 
+
     private void startNotification(String programName) {
         NotificationManager manager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
         Notification.Builder builder = new Notification.Builder(this);//新建Notification.Builder对象
         PendingIntent intent = PendingIntent.getActivity(this, 0, new Intent(this, BBeatActivity.class), 0);
-
-//        RemoteViews view = new RemoteViews(getPackageName(),R.layout.layout_notification);
-
-
-
         //PendingIntent点击通知后所跳转的页面
-        builder.setContentTitle(getString(R.string.notif_started));
-        builder.setContentText(getString(R.string.notif_descr, programName));
+
+        Intent intent1=new Intent("play").putExtra("pause",1);
+        PendingIntent pause= PendingIntent.getBroadcast(this,112,intent1,0);
+
+        RemoteViews view = new RemoteViews(getPackageName(), R.layout.layout_notification);
+
+        view.setOnClickPendingIntent(R.id.status_bar_latest_event_content, intent);
+        view.setOnClickPendingIntent(R.id.notification_pause, pause);
+        view.setTextViewText(R.id.notification_title,getString(R.string.notif_descr, programName));
+        view.setTextViewText(R.id.notification_text,getString(R.string.notif_descr, programName));
         builder.setSmallIcon(R.drawable.icon);
+        builder.setContent(view);
         builder.setContentIntent(intent);//执行intent
         Notification notification = builder.getNotification();//将builder对象转换为普通的notification
         notification.flags |= Notification.FLAG_ONGOING_EVENT | Notification.FLAG_NO_CLEAR;
         manager.notify(1, notification);//运行notification
+
 
 
 
@@ -753,5 +752,22 @@ public class BBeatActivity extends BaseActivity {
     private void loadConfig() {
         vizEnabled= Preferences.isVizEnabled();
     }
+
+
+    BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent!=null ){
+                Log.e(TAG,"=========================");
+                if (intent.getExtras().getInt("pause")==1){
+
+
+                    pauseOrResume();
+
+                }
+            }
+        }
+    };
+
 
 }
