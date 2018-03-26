@@ -80,12 +80,16 @@ public class BBeatActivity extends BaseActivity {
     private int soundUnity;
     private SoundPool mSoundPool;
     private NotificationManager mNotificationManager;
+    private Notification mNotification;
+    private int notificationId=999;
+    private String ACTION_PAUSE ="action.beat.play.pause";
+    private String ACTION_EVENT="playorpause";
+    private boolean ACTION_EVENT_CODE=true;
     private Handler mHandler = new Handler();
     private RunProgram programFSM;
     private long pause_time = -1;
     private Vector<StreamVoice> playingStreams;
     private int playingBackground = -1;
-
     private static final float DEFAULT_VOLUME = 0.6f;
     private static final float BG_VOLUME_RATIO = 0.4f;
     private static final float FADE_INOUT_PERIOD = 5f;
@@ -103,6 +107,7 @@ public class BBeatActivity extends BaseActivity {
     /**当前播放的*/
     private static Program currentProgram;
 
+    private MenuItem playMenu,visableMenu;
     @Override
     protected int getLayout() {
         return R.layout.beat_activity;
@@ -112,31 +117,21 @@ public class BBeatActivity extends BaseActivity {
     protected void initEventAndData() {
        /* Init sounds */
         loadConfig();
-
         initSounds();
-
         mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-
         BusEvent event = EventBus.getDefault().getStickyEvent(BusEvent.class);
-
         currentProgram = (Program) event.getValue();
-
         if (currentProgram==null) {
             finish();
         }
         String name = currentProgram.getName();
-
         startProgram();
-
         startPreviouslySelectedProgram();
-
         setSupportActionBar(beatToolbar);
-
         if (getSupportActionBar()!=null) {
             getSupportActionBar().setTitle(name);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-
         beatToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,7 +143,6 @@ public class BBeatActivity extends BaseActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_play_pause:
-                        item.setIcon(pause_time > 0 ? R.drawable.ic_action_pause:R.drawable.ic_action_play);
                         pauseOrResume();
                         break;
                     case R.id.action_visable:
@@ -193,8 +187,9 @@ public class BBeatActivity extends BaseActivity {
                 resetAllVolumes();
             }
         });
+
         IntentFilter intentFilter=new IntentFilter();
-        intentFilter.addAction("play");
+        intentFilter.addAction(ACTION_PAUSE);
         registerReceiver(broadcastReceiver,intentFilter);
     }
 
@@ -241,7 +236,9 @@ public class BBeatActivity extends BaseActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        menu.findItem(R.id.action_visable).setIcon(vizEnabled ? R.drawable.ic_action_visable:R.drawable.ic_action_visable_off);
+        playMenu=menu.findItem(R.id.action_play_pause);
+        visableMenu=menu.findItem(R.id.action_visable);
+        visableMenu.setIcon(vizEnabled ? R.drawable.ic_action_visable:R.drawable.ic_action_visable_off);
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -258,6 +255,12 @@ public class BBeatActivity extends BaseActivity {
      * 暂停控制
      */
     public void pauseOrResume() {
+        playMenu.setIcon(pause_time > 0 ? R.drawable.ic_action_pause:R.drawable.ic_action_play);
+        if (mNotification!=null && mNotification.contentView!=null) {
+            mNotification.contentView.setImageViewResource(R.id.notification_pause,pause_time > 0 ? R.drawable.ic_action_pause:R.drawable.ic_action_play);
+            mNotificationManager.notify(notificationId,mNotification);
+        }
+
         if (pause_time > 0) {
             long delta = getClock() - pause_time;
             programFSM.catchUpAfterPause(delta);
@@ -268,6 +271,7 @@ public class BBeatActivity extends BaseActivity {
             pause_time = getClock();
             muteAll();
         }
+
     }
 
     private void setGraphicsEnabled(boolean on) {
@@ -336,11 +340,9 @@ public class BBeatActivity extends BaseActivity {
         }
     }
 
-
     private void cancelAllNotifications() {
         mNotificationManager.cancelAll();
     }
-
 
     private void startProgram() {
         if (programFSM != null) {
@@ -350,22 +352,17 @@ public class BBeatActivity extends BaseActivity {
     }
 
     private void startPreviouslySelectedProgram() {
-
-        startNotification(currentProgram.getName());
-
         glMode = currentProgram.doesUseGL();
-
         if (glMode) {
             mVizV = new GLVizualizationView(getBaseContext());
         } else {
             mVizV = new CanvasVizualizationView(getBaseContext());
         }
-
         mVizHolder.addView(mVizV);
         pause_time = -1;
-
         saveConfig();
         startVoicePlayer();
+        startNotification(currentProgram.getName());
     }
 
     void stop(int soundID) {
@@ -505,7 +502,6 @@ public class BBeatActivity extends BaseActivity {
         private Program pR;
         private Iterator<Period> periodsIterator;
         private Period currentPeriod;
-        // current Period start time
         private long cT;
         private long startTime;
         private long programLength;
@@ -582,6 +578,11 @@ public class BBeatActivity extends BaseActivity {
                                 +
                                 sProgramLength
                 );
+
+                if (mNotification!=null && mNotification.contentView!=null) {
+                    mNotification.contentView.setTextViewText(R.id.notification_text, getString(R.string.notif_descr, Status.getText()));
+                    mNotificationManager.notify(notificationId, mNotification);
+                }
                 updatePeriodGraph((now - startTime) / 1000);
             }
         }
@@ -718,30 +719,21 @@ public class BBeatActivity extends BaseActivity {
 
 
     private void startNotification(String programName) {
-        NotificationManager manager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
         Notification.Builder builder = new Notification.Builder(this);//新建Notification.Builder对象
         PendingIntent intent = PendingIntent.getActivity(this, 0, new Intent(this, BBeatActivity.class), 0);
         //PendingIntent点击通知后所跳转的页面
-
-        Intent intent1=new Intent("play").putExtra("pause",1);
-        PendingIntent pause= PendingIntent.getBroadcast(this,112,intent1,0);
-
+        Intent intentPause=new Intent(ACTION_PAUSE).putExtra(ACTION_EVENT,ACTION_EVENT_CODE);
+        PendingIntent pause= PendingIntent.getBroadcast(this,112,intentPause,0);
         RemoteViews view = new RemoteViews(getPackageName(), R.layout.layout_notification);
-
         view.setOnClickPendingIntent(R.id.status_bar_latest_event_content, intent);
         view.setOnClickPendingIntent(R.id.notification_pause, pause);
         view.setTextViewText(R.id.notification_title,getString(R.string.notif_descr, programName));
-        view.setTextViewText(R.id.notification_text,getString(R.string.notif_descr, programName));
         builder.setSmallIcon(R.drawable.icon);
         builder.setContent(view);
         builder.setContentIntent(intent);//执行intent
-        Notification notification = builder.getNotification();//将builder对象转换为普通的notification
-        notification.flags |= Notification.FLAG_ONGOING_EVENT | Notification.FLAG_NO_CLEAR;
-        manager.notify(1, notification);//运行notification
-
-
-
-
+        mNotification = builder.getNotification();//将builder对象转换为普通的notification
+        mNotification.flags |= Notification.FLAG_ONGOING_EVENT | Notification.FLAG_NO_CLEAR;
+        mNotificationManager.notify(notificationId, mNotification);//运行notification
     }
     private long getClock() {
         return SystemClock.elapsedRealtime();
@@ -754,20 +746,17 @@ public class BBeatActivity extends BaseActivity {
     }
 
 
+
+
+
+
     BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent!=null ){
-                Log.e(TAG,"=========================");
-                if (intent.getExtras().getInt("pause")==1){
-
-
-                    pauseOrResume();
-
-                }
+            if (intent!=null && intent.getExtras().getBoolean(ACTION_EVENT)){
+                pauseOrResume();
             }
         }
     };
-
 
 }

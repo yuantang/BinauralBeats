@@ -17,36 +17,21 @@
     <string name="background">Background</string>
     <string name="volume">Volume</string>
     <string name="source">Source</string>
-    <string name="forum">Forum</string>
-    <string name="like">Like</string>
-    <string name="share_facebook">Share on Facebook</string>
-    <string name="jointhecommunity">Join the community!</string>
+
 
     <string name="notif_started">Binaural Beats</string>
-    <string name="notif_descr" formatted="false">%s in progress</string>
-
+    <string name="notif_descr" formatted="false">%s</string>
     <string name="info_timing" formatted="false">Main Beat %.2fHz - %s:%s/</string>
     <string name="time_format" formatted="false">%s:%s</string>
     <string name="time_format_min_sec" formatted="false">%sm%s</string>
-
-    <string name="comments_title">Comments</string>
-    <string name="menu">Menu</string>
     <string name="stop_program">Stop program</string>
     <string name="toggle_graphics">Graphics on/off</string>
     <string name="graphics_on">Graphics on</string>
     <string name="graphics_off">Graphics off, screen will turn off automatically</string>
-
-
-
     <string name="title_activity_home">HomeActivity</string>
-
-
-
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_example">Example action</string>
-    <string name="action_settings">Settings</string>
 
 
     <!--分类-->
