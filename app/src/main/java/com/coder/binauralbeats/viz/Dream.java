@@ -27,9 +27,12 @@ import com.coder.binauralbeats.R;
 
 
 public class Dream extends Image {
-
-	public Dream() {
-		super(R.drawable.dream);
+	public Dream(int id) {
+		super(id);
 	}
+
+//	public Dream() {
+//		super(R.drawable.dream);
+//	}
 
 }
