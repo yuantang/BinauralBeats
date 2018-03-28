@@ -122,7 +122,7 @@ public class HomeActivity extends BaseActivity
 
     @Override
     public void showData(ArrayList<CategoryGroup> groupList) {
-         groups=groupList;
+        groups=groupList;
         adapter.upData(groupList);
     }
 }
