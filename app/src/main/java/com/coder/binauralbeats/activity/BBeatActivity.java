@@ -95,6 +95,8 @@ public class BBeatActivity extends BaseActivity {
     private static final float FADE_INOUT_PERIOD = 5f;
     private static final float FADE_MIN = 0.6f;
 
+
+
     private boolean glMode = false;
     private boolean vizEnabled = true;
     /**节拍音频大小*/
@@ -465,7 +467,7 @@ public class BBeatActivity extends BaseActivity {
         for (BinauralBeatVoice v : voices) {
             float ratio = (v.freqEnd - v.freqStart) / length;
             if (res == -1) {
-                res = ratio * pos + v.freqStart;
+                res = ratio * pos + v.freqStart; // Only set res for the first voice
             }
             freqs[i] = res;
             i++;

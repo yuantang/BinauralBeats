@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Binaural Beats Therapy</string>
+    <string name="cancel">Cancel</string>
+    <string name="pause">Pause</string>
+    <string name="resume">Resume</string>
+    <string name="ok">Ok</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="share">Share</string>
+    <string name="close">Close</string>
+    <string name="contact">Contact</string>
+    <string name="rate_on_market">Rate on market</string>
+    <string name="donate">Donate</string>
+
+    <string name="voices">Voices</string>
+    <string name="background">Background</string>
+    <string name="volume">Volume</string>
+    <string name="source">Source</string>
+
+
+    <string name="notif_started">Binaural Beats</string>
+    <string name="notif_descr" formatted="false">%s</string>
+    <string name="info_timing" formatted="false">Main Beat %.2fHz - %s:%s/</string>
+    <string name="time_format" formatted="false">%s:%s</string>
+    <string name="time_format_min_sec" formatted="false">%sm%s</string>
+    <string name="stop_program">Stop program</string>
+    <string name="toggle_graphics">Graphics on/off</string>
+    <string name="graphics_on">Graphics on</string>
+    <string name="graphics_off">Graphics off, screen will turn off automatically</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+
+
+    <!--分类-->
+    <string name="group_oobe">Out of body experience</string>
+    <string name="group_hypnosis">催眠</string>
+    <string name="group_sleep">睡眠</string>
+    <string name="group_healing">健康</string>
+    <string name="group_learning">学习</string>
+    <string name="group_mediation">冥想</string>
+    <string name="group_simulation">Simulation</string>
+    <!--标题-->
+    <string name="program_self_hypnosis">自我催眠</string>
+    <string name="program_highest_mental_activity">Highest mental activity</string>
+    <string name="program_unity">Unity</string>
+    <string name="program_morphine">Morphine pain killer</string>
+    <string name="program_learning">专注于学习</string>
+    <string name="program_creativity">创造力</string>
+    <string name="program_schumann_resonance">舒曼共振</string>
+    <string name="program_astral_01_relax">星体投影 - 放松</string>
+    <string name="program_hallucination">Hallucination</string>
+    <string name="program_sleep_induction">Sleep induction</string>
+    <string name="program_lucid_dreams">Lucid dreams</string>
+    <string name="program_lucid_dreams_2">Lucid dreams - variant</string>
+    <string name="program_wakefulrelax">Wakeful Relaxation</string>
+    <string name="program_shamanic_rhythm">Shamanic rhythm</string>
+    <string name="program_smr">Insomnia Relief</string>
+    <string name="program_oobe">Out Of Body Experience</string>
+    <string name="program_hgh">Human Growth Hormone</string>
+    <string name="program_adhd">ADHD</string>
+    <string name="program_hiit">High Intensity Interval Training</string>
+    <string name="program_powernap">Power Nap</string>
+    <string name="program_airplanetravelaid">Airplane travel aid</string>
+
+    <!--描述-->
+    <string name="program_self_hypnosis_desc">Short meditation preset to unite your conscious and subconscious mind. It lasts 20mn : Glide down to theta waves, plateau for 10mn then then slowly come back up to awake state</string>
+    <string name="program_highest_mental_activity_desc">A quick cafeine boost ! This preset shortly reaches Gamma waves, provides higher mental activity, including perception, problem solving, and consciousness. It can be used whenever needed</string>
+    <string name="program_unity_desc">Wander in deep relaxing delta waves and let your mind explore freely and without bounds. May induce dreamless sleep and loss of body awareness.</string>
+    <string name="program_morphine_desc">A relaxing, southing mix of beats that slowly but surely appease any pain point. The brain runs the body as you will discover with this preset.</string>
+    <string name="program_learning_desc">A 2h preset that enhances learning, increases ability to concentrate and think clearly, reduces unwillingness to work.  Students can\'t get enough of this program! This one is to be listened while studying.</string>
+    <string name="program_creativity_desc">It\'s a 20mn meditation preset to assist in Creative Thinking It begins at 10hz then varying from 8 to 6 hz with a glide back to 8hz at the end</string>
+    <string name="program_wakefulrelax_desc">This presets stimulates a wakeful relaxation state with closed eyes. Zen-trained meditation masters produce noticeably more alpha waves during meditation.To be used in short 10 to 15 minutes doses to calm down and concentrate when needed.</string>
+    <string name="program_schumann_resonance_desc">A meditation to put your mind in balance with the Earth. Glide down to Schumann Resonance, low frequency portion of the Earth\'s electromagnetic field, resonate for 10 minutes then slowly come back up to awake state.</string>
+    <string name="program_astral_01_relax_desc">From the book Mastering Astral Projection, Week 1: Relaxation. Use a low to medium sound level, sit in a quiet place, and listen to the preset with eyes closed. A hard-backed chair without neck support is recommended to prevent falling asleep.</string>
+    <string name="program_hiit_desc">This preset is based on a Tabata HIIT protocol, it helps you give your maximum during work periods and recover quicker during rest periods. Starts with 2 minutes warm up then 8 times 20 secs work, 10 secs rest followed by 2 minutes  of cool down. As always use headphones.</string>
+    <string name="program_hallucination_desc">A fun preset that simulates psychedelic hallucinations.</string>
+    <string name="program_sleep_induction_desc">Sleep induction for use about 15 mn before bedtime to help you fall asleep. It\'s a one hour programm, with 6mn drop into delta waves followed by 54 mn of relaxing delta plateau</string>
+    <string name="program_lucid_dreams_desc">This preset stimulates lucid dreaming. It has to be played while sleeping, it is recommend during a nap, while seated in a chair or sofa to prevent falling fully asleep. 5hz base frequency with 8 hz spikes</string>
+    <string name="program_shamanic_rhythm_desc">Shamanic Drum RhythmBegin at 9hz then glide down to 4.5hz for 50 minutes and back up at the end.</string>
+    <string name="program_smr_desc">Insomnia relief through stimulating Sensory Motor Rythm. Don\'t use it at bedtime, use it only during your insomnia, for example if you wake up in the middle of the night and can\'t go back to sleep 38 mn of crossing frequencies from 8 to 12 Hz</string>
+    <string name="program_lucid_dreams_2_desc">Sleep Induction and Lucid Dreams 2Sleep Induction into a longer lucid dreaming program</string>
+    <string name="program_adhd_desc">This preset is an aid for Attention Deficit Hyperactivity Disorder. It lasts 30mn and alternates between 12 and 20 hz. It can be used whenever needed</string>
+    <string name="program_powernap_desc">Around 20mn of rest to make it through the day. Put on your headphones and relax!</string>
+    <string name="program_airplanetravelaid_desc">Designed to make time go faster on flights. Constant declining base frequency, you can relax or read a book at the same time. Can be repeated if wanted.</string>
+
+</resources>
