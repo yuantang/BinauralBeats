@@ -35,13 +35,14 @@
 
 
     <!--分类-->
-    <string name="group_oobe">Out of body experience</string>
     <string name="group_hypnosis">催眠</string>
     <string name="group_sleep">睡眠</string>
     <string name="group_healing">健康</string>
     <string name="group_learning">学习</string>
     <string name="group_mediation">冥想</string>
     <string name="group_simulation">Simulation</string>
+    <string name="group_oobe">出体经验</string>
+
     <!--标题-->
     <string name="program_self_hypnosis">自我催眠</string>
     <string name="program_highest_mental_activity">Highest mental activity</string>

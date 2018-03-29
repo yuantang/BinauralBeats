@@ -1,22 +1,17 @@
 package com.coder.binauralbeats.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 
 import com.coder.binauralbeats.R;
 import com.coder.binauralbeats.base.BaseActivity;
 import com.coder.binauralbeats.basemvp.MvpBasePresenter;
 import com.coder.binauralbeats.basemvp.MvpBaseView;
 
-public class WelcomeActivity extends BaseActivity {
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_welcom);
-    }
+public class AboutActivity extends BaseActivity {
+
     @Override
     protected int getLayout() {
-        return 0;
+        return R.layout.activity_about;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.coder.binauralbeats.base;
 
+import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -57,6 +58,7 @@ public abstract class BaseActivity<V extends MvpBaseView, P extends MvpBasePrese
         }
 
         ActivityCollector.addActivity(this);
+        superInit(getIntent());
         initEventAndData();
         setToolBar();
         super.onCreate(savedInstanceState);
@@ -82,6 +84,7 @@ public abstract class BaseActivity<V extends MvpBaseView, P extends MvpBasePrese
     protected abstract int getLayout();
     protected abstract P createPresenter();
     protected abstract V createView();
+    protected abstract void superInit(Intent intent);
     protected abstract void initEventAndData();
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

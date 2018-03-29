@@ -193,6 +193,7 @@ public class BBeatActivity extends BaseActivity {
         IntentFilter intentFilter=new IntentFilter();
         intentFilter.addAction(ACTION_PAUSE);
         registerReceiver(broadcastReceiver,intentFilter);
+
     }
 
     @Override
@@ -203,6 +204,11 @@ public class BBeatActivity extends BaseActivity {
     @Override
     protected MvpBaseView createView() {
         return null;
+    }
+
+    @Override
+    protected void superInit(Intent intent) {
+
     }
 
     /**
@@ -730,8 +736,9 @@ public class BBeatActivity extends BaseActivity {
         view.setOnClickPendingIntent(R.id.status_bar_latest_event_content, intent);
         view.setOnClickPendingIntent(R.id.notification_pause, pause);
         view.setTextViewText(R.id.notification_title,getString(R.string.notif_descr, programName));
-        builder.setSmallIcon(R.drawable.icon);
+        builder.setSmallIcon(R.mipmap.ic_launcher);
         builder.setContent(view);
+        builder.setAutoCancel(true);
         builder.setContentIntent(intent);//执行intent
         mNotification = builder.getNotification();//将builder对象转换为普通的notification
         mNotification.flags |= Notification.FLAG_ONGOING_EVENT | Notification.FLAG_NO_CLEAR;
@@ -746,9 +753,6 @@ public class BBeatActivity extends BaseActivity {
     private void loadConfig() {
         vizEnabled= Preferences.isVizEnabled();
     }
-
-
-
 
 
 

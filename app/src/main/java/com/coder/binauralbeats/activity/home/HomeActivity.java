@@ -58,6 +58,11 @@ public class HomeActivity extends BaseActivity
     protected MvpBaseView createView() {
         return this;
     }
+
+    @Override
+    protected void superInit(Intent intent) {
+    }
+
     @Override
     protected void initEventAndData() {
         setDrawerToggle();
