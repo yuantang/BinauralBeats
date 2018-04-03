@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "521079042435",
+    "firebase_url": "https://binaural-beats-3e912.firebaseio.com",
+    "project_id": "binaural-beats-3e912",
+    "storage_bucket": "binaural-beats-3e912.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:521079042435:android:0cb891ca8039e794",
+        "android_client_info": {
+          "package_name": "com.coder.binauralbeats"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "521079042435-mvk8qt88r3a255pk5kkciu4ks3t930hq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0TA2wDEA3dA4GfqlteSwR_zLHdzhSyoE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

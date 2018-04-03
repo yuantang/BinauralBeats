@@ -72,7 +72,6 @@ public class BBeatActivity extends BaseActivity {
     @BindView(R.id.Status)
     TextView Status;
 
-
     enum eState {START, RUNNING, END}
     private static final int MAX_STREAMS = 5;
     private View mVizV;
@@ -94,7 +93,6 @@ public class BBeatActivity extends BaseActivity {
     private static final float BG_VOLUME_RATIO = 0.4f;
     private static final float FADE_INOUT_PERIOD = 5f;
     private static final float FADE_MIN = 0.6f;
-
 
 
     private boolean glMode = false;

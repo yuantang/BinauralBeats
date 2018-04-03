@@ -14,13 +14,13 @@ import android.view.MenuItem;
 
 import com.coder.binauralbeats.R;
 import com.coder.binauralbeats.activity.BBeatActivity;
-import com.coder.binauralbeats.event.BusEvent;
 import com.coder.binauralbeats.adapter.GroupedListAdapter;
 import com.coder.binauralbeats.base.BaseActivity;
 import com.coder.binauralbeats.basemvp.MvpBasePresenter;
 import com.coder.binauralbeats.basemvp.MvpBaseView;
 import com.coder.binauralbeats.beats.CategoryGroup;
 import com.coder.binauralbeats.beats.Program;
+import com.coder.binauralbeats.event.BusEvent;
 import com.coder.binauralbeats.executor.NavigationMenuExecutor;
 import com.donkingliang.groupedadapter.adapter.GroupedRecyclerViewAdapter;
 import com.donkingliang.groupedadapter.holder.BaseViewHolder;
@@ -62,7 +62,6 @@ public class HomeActivity extends BaseActivity
     @Override
     protected void superInit(Intent intent) {
     }
-
     @Override
     protected void initEventAndData() {
         setDrawerToggle();
@@ -80,6 +79,7 @@ public class HomeActivity extends BaseActivity
             }
         });
         homePresenter.loadData();
+
     }
     @Override
     public void onBackPressed() {

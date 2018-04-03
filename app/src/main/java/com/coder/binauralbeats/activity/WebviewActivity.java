@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.webkit.DownloadListener;
 import android.webkit.JsResult;
@@ -29,9 +30,6 @@ public class WebviewActivity extends BaseActivity {
     Toolbar toolbar;
     @BindView(R.id.webView)
     WebView mWebView;
-//    @BindView(R.id.web_progress)
-//    ProgressBar webProgress;
-
     private String url;
 
     @Override
@@ -85,6 +83,7 @@ public class WebviewActivity extends BaseActivity {
             }
         });
         mWebView.loadUrl("file:///android_asset/about/about_en.html");
+
     }
 
     private class MyWebViewDownLoadListener implements DownloadListener {
@@ -133,5 +132,15 @@ public class WebviewActivity extends BaseActivity {
             builder.show();
             return true;
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        //这是一个监听用的按键的方法，keyCode 监听用户的动作，如果是按了返回键，同时Webview要返回的话，WebView执行回退操作，因为mWebView.canGoBack()返回的是一个Boolean类型，所以我们把它返回为true
+        if(keyCode==KeyEvent.KEYCODE_BACK && mWebView.canGoBack()){
+            mWebView.goBack();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

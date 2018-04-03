@@ -1,33 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.home.HomeActivity">
-
-    <include layout="@layout/layout_toolbar"></include>
-
-    <com.donkingliang.groupedadapter.widget.StickyHeaderLayout
-        android:id="@+id/stickylayout"
+    tools:context=".activity.home.HomeActivity"
+    android:orientation="vertical"
+    >
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_above="@+id/adView"
         >
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </com.donkingliang.groupedadapter.widget.StickyHeaderLayout>
+        <android.support.design.widget.AppBarLayout android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/app_bar_layout"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:theme="@style/AppTheme.AppBarOverlay"
+            xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
+            <android.support.v7.widget.Toolbar
+                app:theme="@style/ToolbarTheme"
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+        </android.support.design.widget.AppBarLayout>
+        <com.donkingliang.groupedadapter.widget.StickyHeaderLayout
+            android:layout_below="@+id/app_bar_layout"
+            android:id="@+id/stickylayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/adView"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            >
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </com.donkingliang.groupedadapter.widget.StickyHeaderLayout>
+
+    </android.support.design.widget.CoordinatorLayout>
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email"
+        android:layout_gravity="center"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-4727610544131155/8836227280"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:visibility="gone"
-        />
-
-</android.support.design.widget.CoordinatorLayout>
+        >
+    </com.google.android.gms.ads.AdView>
+</RelativeLayout>

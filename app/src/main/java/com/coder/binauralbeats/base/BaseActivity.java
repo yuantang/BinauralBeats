@@ -10,13 +10,23 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StyleRes;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.View;
 
+import com.coder.binauralbeats.BuildConfig;
 import com.coder.binauralbeats.R;
-import com.coder.binauralbeats.event.BusEvent;
 import com.coder.binauralbeats.basemvp.MvpBasePresenter;
 import com.coder.binauralbeats.basemvp.MvpBaseView;
+import com.coder.binauralbeats.event.BusEvent;
 import com.coder.binauralbeats.permission.PermissionReq;
 import com.coder.binauralbeats.utils.Preferences;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -32,17 +42,18 @@ import butterknife.Unbinder;
 
 public abstract class BaseActivity<V extends MvpBaseView, P extends MvpBasePresenter> extends AppCompatActivity {
 
+    private static String TAG ;
     private Unbinder unbinder;
     protected P mPresenter;
     private V mView;
     protected Handler mHandler = new Handler(Looper.getMainLooper());
+    FirebaseRemoteConfig mFirebaseRemoteConfig;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
         if (Preferences.isNightMode()) {
             setTheme(getDarkTheme());
         }
-
         setContentView(getLayout());
         unbinder = ButterKnife.bind(this);
         EventBus.getDefault().register(this);
@@ -56,13 +67,24 @@ public abstract class BaseActivity<V extends MvpBaseView, P extends MvpBasePrese
         if (mPresenter!=null && mView!=null){
             mPresenter.attachView(mView);
         }
-
+        TAG=this.getLocalClassName();
         ActivityCollector.addActivity(this);
         superInit(getIntent());
         initEventAndData();
         setToolBar();
+        firebaseConfig();
+
         super.onCreate(savedInstanceState);
     }
+
+    private void displayWelcomeMessage() {
+        boolean isOpenAd = mFirebaseRemoteConfig.getBoolean("bb_is_open_ad");
+        Log.e(TAG,"====isOpenAd:"+isOpenAd);
+        if (isOpenAd) {
+            addAdView();
+        }
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void OnEventReceive(BusEvent event) {
 
@@ -101,5 +123,63 @@ public abstract class BaseActivity<V extends MvpBaseView, P extends MvpBasePrese
         unbinder.unbind();
         ActivityCollector.removeActivity(this);
         EventBus.getDefault().unregister(this);
+    }
+    private void firebaseConfig() {
+        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
+        FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
+                .setDeveloperModeEnabled(BuildConfig.DEBUG)
+                .build();
+        mFirebaseRemoteConfig.setConfigSettings(configSettings);
+        long cacheExpiration = 3600; // 1 hour in seconds.
+        // If your app is using developer mode, cacheExpiration is set to 0, so each fetch will
+        // retrieve values from the service.
+        if (mFirebaseRemoteConfig.getInfo().getConfigSettings().isDeveloperModeEnabled()) {
+            cacheExpiration = 0;
+        }
+        mFirebaseRemoteConfig.fetch(cacheExpiration)
+                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            mFirebaseRemoteConfig.activateFetched();
+                        }
+                        displayWelcomeMessage();
+                    }
+                });
+    }
+    private void addAdView(){
+        final AdView adView=findViewById(R.id.adView);
+        if (adView==null){
+            return;
+        }
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
+        adView.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                // Code to be executed when an ad finishes loading.
+                adView.setVisibility(View.VISIBLE);
+            }
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+                // Code to be executed when an ad request fails.
+                adView.setVisibility(View.GONE);
+            }
+            @Override
+            public void onAdOpened() {
+                // Code to be executed when an ad opens an overlay that
+                // covers the screen.
+            }
+            @Override
+            public void onAdLeftApplication() {
+                // Code to be executed when the user has left the app.
+            }
+            @Override
+            public void onAdClosed() {
+                // Code to be executed when when the user is about to return
+                // to the app after tapping on an ad.
+                adView.setVisibility(View.GONE);
+            }
+        });
     }
 }
