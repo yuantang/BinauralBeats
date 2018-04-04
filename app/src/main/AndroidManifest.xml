@@ -18,10 +18,9 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.home.HomeActivity"
+            android:name=".activity.WelcomeActivity"
             android:alwaysRetainTaskState="true"
             android:label="@string/app_name"
-            android:launchMode="singleTop"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,13 +29,9 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".beats.IncomingCallReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.PHONE_STATE" />
-            </intent-filter>
-        </receiver>
 
-        <activity android:name=".activity.WelcomeActivity" />
+
+        <activity android:name=".activity.home.HomeActivity" />
         <activity
             android:name=".activity.BBeatActivity"
             android:launchMode="singleTop" />
@@ -46,6 +41,11 @@
         <activity android:name="com.google.android.gms.ads.AdActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:theme="@android:style/Theme.Translucent" />
+        <receiver android:name=".beats.IncomingCallReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.PHONE_STATE" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

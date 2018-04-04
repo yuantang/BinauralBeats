@@ -35,23 +35,22 @@
 
 
     <!--分类-->
-    <string name="group_hypnosis">催眠</string>
-    <string name="group_sleep">睡眠</string>
-    <string name="group_healing">健康</string>
-    <string name="group_learning">学习</string>
-    <string name="group_mediation">冥想</string>
+    <string name="group_oobe">Out of body experience</string>
+    <string name="group_hypnosis">Hypnosis</string>
+    <string name="group_sleep">Sleep</string>
+    <string name="group_healing">Healing</string>
+    <string name="group_learning">Learning</string>
+    <string name="group_mediation">Meditation</string>
     <string name="group_simulation">Simulation</string>
-    <string name="group_oobe">出体经验</string>
-
     <!--标题-->
-    <string name="program_self_hypnosis">自我催眠</string>
+    <string name="program_self_hypnosis">Self Hypnosis</string>
     <string name="program_highest_mental_activity">Highest mental activity</string>
     <string name="program_unity">Unity</string>
     <string name="program_morphine">Morphine pain killer</string>
-    <string name="program_learning">专注于学习</string>
-    <string name="program_creativity">创造力</string>
-    <string name="program_schumann_resonance">舒曼共振</string>
-    <string name="program_astral_01_relax">星体投影 - 放松</string>
+    <string name="program_learning">Study and learning</string>
+    <string name="program_creativity">Creativity</string>
+    <string name="program_schumann_resonance">Schumann Resonance</string>
+    <string name="program_astral_01_relax">Astral projection - Relaxation</string>
     <string name="program_hallucination">Hallucination</string>
     <string name="program_sleep_induction">Sleep induction</string>
     <string name="program_lucid_dreams">Lucid dreams</string>
