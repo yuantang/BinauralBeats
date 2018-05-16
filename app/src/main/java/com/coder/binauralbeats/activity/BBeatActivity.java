@@ -112,13 +112,15 @@ public class BBeatActivity extends BaseActivity {
     protected int getLayout() {
         return R.layout.beat_activity;
     }
-
+    @Override
+    protected void superInit(Intent intent) {
+    }
     @Override
     protected void initEventAndData() {
        /* Init sounds */
         loadConfig();
         initSounds();
-        mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
         BusEvent event = EventBus.getDefault().getStickyEvent(BusEvent.class);
         currentProgram = (Program) event.getValue();
         if (currentProgram==null) {
@@ -192,6 +194,8 @@ public class BBeatActivity extends BaseActivity {
         intentFilter.addAction(ACTION_PAUSE);
         registerReceiver(broadcastReceiver,intentFilter);
 
+        mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
     }
 
     @Override
@@ -204,10 +208,7 @@ public class BBeatActivity extends BaseActivity {
         return null;
     }
 
-    @Override
-    protected void superInit(Intent intent) {
 
-    }
 
     /**
      * 初始化背景音
@@ -585,7 +586,7 @@ public class BBeatActivity extends BaseActivity {
                                 sProgramLength
                 );
 
-                if (mNotification!=null && mNotification.contentView!=null) {
+                if (mNotificationManager!=null && mNotification!=null && mNotification.contentView!=null) {
                     mNotification.contentView.setTextViewText(R.id.notification_text, getString(R.string.notif_descr, Status.getText()));
                     mNotificationManager.notify(notificationId, mNotification);
                 }
@@ -751,8 +752,6 @@ public class BBeatActivity extends BaseActivity {
     private void loadConfig() {
         vizEnabled= Preferences.isVizEnabled();
     }
-
-
 
     BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override

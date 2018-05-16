@@ -23,12 +23,10 @@ import java.util.List;
  * ================================================
  */
 public class PermissionReq {
-
     //获取权限的结果
     private PermissionResult mResult;
     //权限
     private String [] mPermissions;
-
     private static int sRequestCode = 0;
     private static SparseArray<PermissionResult> sResultArray = new SparseArray<>();
 

@@ -46,6 +46,8 @@ public class HomePresenter extends MvpBasePresenter<HomeView> {
             pm.setProgram(DefaultProgramsBuilder.getProgram(pm));
             g.add(pm);
         }
+
         getView().showData(groups);
+
     }
 }

@@ -22,5 +22,4 @@ public class IconFontTextView extends TextView {
         setTypeface(typeface);
     }
 
-
 }

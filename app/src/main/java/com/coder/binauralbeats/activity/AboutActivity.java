@@ -23,14 +23,10 @@ public class AboutActivity extends BaseActivity {
     protected MvpBaseView createView() {
         return null;
     }
-
     @Override
     protected void superInit(Intent intent) {
-
     }
-
     @Override
     protected void initEventAndData() {
-
     }
 }

@@ -52,7 +52,7 @@ public class HomeActivity extends BaseActivity
     }
     @Override
     protected MvpBasePresenter createPresenter() {
-        return homePresenter=new HomePresenter();
+        return homePresenter==null ? homePresenter=new HomePresenter():homePresenter;
     }
     @Override
     protected MvpBaseView createView() {
@@ -73,13 +73,15 @@ public class HomeActivity extends BaseActivity
             public void onChildClick(GroupedRecyclerViewAdapter adapter, BaseViewHolder holder,
                                      int groupPosition, int childPosition) {
                 Program program=groups.get(groupPosition).getObjets().get(childPosition).getProgram();
+                EventBus.getDefault().postSticky(new BusEvent("key",program));
                 Intent intent=new Intent(HomeActivity.this,BBeatActivity.class);
                 startActivity(intent);
-                EventBus.getDefault().postSticky(new BusEvent("key",program));
+
             }
         });
-        homePresenter.loadData();
-
+        if (homePresenter!=null){
+            homePresenter.loadData();
+        }
     }
     @Override
     public void onBackPressed() {

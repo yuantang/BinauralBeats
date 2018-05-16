@@ -32,7 +32,6 @@ public class MyApp extends Application {
         strategy.setAppChannel("google play");
         CrashReport.initCrashReport(getApplicationContext(), "345a2cad31", false,strategy);
         CrashReport.setIsDevelopmentDevice(this, false);
-
         MobileAds.initialize(this,"ca-app-pub-4727610544131155~6488840515");
 
     }

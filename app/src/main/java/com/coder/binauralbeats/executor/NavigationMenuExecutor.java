@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.view.MenuItem;
 
-import com.coder.binauralbeats.ConsIntent;
 import com.coder.binauralbeats.R;
 import com.coder.binauralbeats.activity.WebviewActivity;
 import com.coder.binauralbeats.utils.DevicesUtils;
@@ -42,7 +41,7 @@ public class NavigationMenuExecutor {
     }
 
     private static void shareApp(Context context) {
-        String url = "https://play.google.com/store/apps/details?id" + context.getPackageName();
+        String url = "https://play.google.com/store/apps/details?id=" + context.getPackageName();
         Intent textIntent = new Intent(Intent.ACTION_SEND);
         textIntent.setType("text/plain");
         textIntent.putExtra(Intent.EXTRA_TEXT, "Binaural Beats Therapy App "+url);
