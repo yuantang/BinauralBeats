@@ -121,6 +121,8 @@ public class BBeatActivity extends BaseActivity {
         loadConfig();
         initSounds();
 
+        mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
         BusEvent event = EventBus.getDefault().getStickyEvent(BusEvent.class);
         currentProgram = (Program) event.getValue();
         if (currentProgram==null) {
@@ -194,7 +196,6 @@ public class BBeatActivity extends BaseActivity {
         intentFilter.addAction(ACTION_PAUSE);
         registerReceiver(broadcastReceiver,intentFilter);
 
-        mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
     }
 
