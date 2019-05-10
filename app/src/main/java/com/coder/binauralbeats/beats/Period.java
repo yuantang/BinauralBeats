@@ -25,9 +25,10 @@ package com.coder.binauralbeats.beats;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Period implements Parcelable {
+public class Period implements Serializable {
 	/**
 	 * Length of this period in second
 	 */
@@ -127,40 +128,8 @@ public class Period implements Parcelable {
 		return voices.get(0).freqEnd;
 	}
 
-	@Override
-	public int describeContents() {
-		return 0;
-	}
 
-	@Override
-	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeInt(this.length);
-		dest.writeTypedList(this.voices);
-		dest.writeInt(this.background == null ? -1 : this.background.ordinal());
-		dest.writeFloat(this.backgroundvol);
-		dest.writeParcelable((Parcelable) this.v, flags);
-		dest.writeByte(this.strechable ? (byte) 1 : (byte) 0);
-	}
 
-	protected Period(Parcel in) {
-		this.length = in.readInt();
-		this.voices = in.createTypedArrayList(BinauralBeatVoice.CREATOR);
-		int tmpBackground = in.readInt();
-		this.background = tmpBackground == -1 ? null : SoundLoop.values()[tmpBackground];
-		this.backgroundvol = in.readFloat();
-		this.v = in.readParcelable(Visualization.class.getClassLoader());
-		this.strechable = in.readByte() != 0;
-	}
 
-	public static final Parcelable.Creator<Period> CREATOR = new Parcelable.Creator<Period>() {
-		@Override
-		public Period createFromParcel(Parcel source) {
-			return new Period(source);
-		}
 
-		@Override
-		public Period[] newArray(int size) {
-			return new Period[size];
-		}
-	};
 }

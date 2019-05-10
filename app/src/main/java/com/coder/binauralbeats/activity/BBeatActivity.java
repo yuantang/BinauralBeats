@@ -60,11 +60,11 @@ public class BBeatActivity extends BaseActivity {
     @BindView(R.id.VisualizationView)
     FrameLayout mVizHolder ;
     @BindView(R.id.soundBGVolumeBar)
+    SeekBar soundBGVolumeBar;
     //背景音量控制
-            SeekBar soundBGVolumeBar;
     @BindView(R.id.soundVolumeBar)
+    SeekBar soundVolumeBar;
     //音量控制
-            SeekBar soundVolumeBar;
     //双耳节拍频率折线图
     @BindView(R.id.graphVoices)
     LinearLayout mGraphVoices;
@@ -117,7 +117,7 @@ public class BBeatActivity extends BaseActivity {
     }
     @Override
     protected void initEventAndData() {
-       /* Init sounds */
+        /* Init sounds */
         loadConfig();
         initSounds();
 
@@ -129,8 +129,6 @@ public class BBeatActivity extends BaseActivity {
             finish();
         }
         String name = currentProgram.getName();
-        startProgram();
-        startPreviouslySelectedProgram();
         setSupportActionBar(beatToolbar);
         if (getSupportActionBar()!=null) {
             getSupportActionBar().setTitle(name);
@@ -157,7 +155,8 @@ public class BBeatActivity extends BaseActivity {
                 return false;
             }
         });
-
+        startProgram();
+        startPreviouslySelectedProgram();
         pause_time = -1;
         soundVolumeBar.setMax(100);
         mSoundBeatVolume = DEFAULT_VOLUME;
@@ -195,7 +194,6 @@ public class BBeatActivity extends BaseActivity {
         IntentFilter intentFilter=new IntentFilter();
         intentFilter.addAction(ACTION_PAUSE);
         registerReceiver(broadcastReceiver,intentFilter);
-
 
     }
 

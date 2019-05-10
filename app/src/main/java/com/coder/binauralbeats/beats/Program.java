@@ -2,6 +2,7 @@ package com.coder.binauralbeats.beats;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -28,8 +29,7 @@ import java.util.Iterator;
  *   BBT project home is at https://github.com/GiorgioRegni/Binaural-Beats
  */
 
-public class Program implements Parcelable {
-
+public class Program implements Serializable {
 	protected String name;
 	protected String description;
 	protected ArrayList<Period> seq;
@@ -98,40 +98,4 @@ public class Program implements Parcelable {
 		return useGL;
 	}
 
-
-
-	@Override
-	public int describeContents() {
-		return 0;
-	}
-
-	@Override
-	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeString(this.name);
-		dest.writeString(this.description);
-		dest.writeList(this.seq);
-		dest.writeString(this.author);
-		dest.writeByte(this.useGL ? (byte) 1 : (byte) 0);
-	}
-
-	protected Program(Parcel in) {
-		this.name = in.readString();
-		this.description = in.readString();
-		this.seq = new ArrayList<Period>();
-		in.readList(this.seq, Period.class.getClassLoader());
-		this.author = in.readString();
-		this.useGL = in.readByte() != 0;
-	}
-
-	public static final Parcelable.Creator<Program> CREATOR = new Parcelable.Creator<Program>() {
-		@Override
-		public Program createFromParcel(Parcel source) {
-			return new Program(source);
-		}
-
-		@Override
-		public Program[] newArray(int size) {
-			return new Program[size];
-		}
-	};
 }

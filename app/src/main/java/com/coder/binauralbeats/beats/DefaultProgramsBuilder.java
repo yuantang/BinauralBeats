@@ -130,7 +130,7 @@ public class DefaultProgramsBuilder {
 			throw new RuntimeException(e);
 		}
 	}
-	
+
 	/*
 	 * First word of a program name is used as a category from ProgramMeta.java
 	 */

@@ -55,8 +55,7 @@ public class GLVizualizationView extends GLSurfaceView implements GLSurfaceView.
 	
 	@Override
 	public void startVisualization(Visualization v, float length) {
-		// TODO drawClear();
-		
+
 		if (v == null)
 			return;
 		

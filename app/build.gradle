@@ -39,5 +39,7 @@ dependencies {
     compile 'com.google.firebase:firebase-core:11.4.2'
     compile 'com.google.firebase:firebase-ads:11.4.2'
     compile 'com.google.firebase:firebase-config:11.4.2'
+    //ANR检测工具
+    compile 'com.github.markzhai:blockcanary-android:1.5.0'
 
 }

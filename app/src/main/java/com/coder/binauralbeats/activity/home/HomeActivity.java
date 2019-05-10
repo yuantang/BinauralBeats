@@ -76,7 +76,6 @@ public class HomeActivity extends BaseActivity
                 EventBus.getDefault().postSticky(new BusEvent("key",program));
                 Intent intent=new Intent(HomeActivity.this,BBeatActivity.class);
                 startActivity(intent);
-
             }
         });
         if (homePresenter!=null){

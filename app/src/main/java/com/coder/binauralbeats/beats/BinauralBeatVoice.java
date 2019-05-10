@@ -25,9 +25,10 @@ package com.coder.binauralbeats.beats;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class BinauralBeatVoice implements Parcelable {
-	public static final float DEFAULT = -1f;
+import java.io.Serializable;
 
+public class BinauralBeatVoice implements Serializable {
+	public static final float DEFAULT = -1f;
 	/**
 	 * Beat frequency in Hz
 	 */
@@ -61,42 +62,8 @@ public class BinauralBeatVoice implements Parcelable {
 		isochronic = yesno;
 		return this;
 	}
-	
 	public boolean isIsochronic() {
 		return isochronic;
 	}
 
-	@Override
-	public int describeContents() {
-		return 0;
-	}
-
-	@Override
-	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeFloat(this.freqStart);
-		dest.writeFloat(this.freqEnd);
-		dest.writeFloat(this.volume);
-		dest.writeFloat(this.pitch);
-		dest.writeByte(this.isochronic ? (byte) 1 : (byte) 0);
-	}
-
-	protected BinauralBeatVoice(Parcel in) {
-		this.freqStart = in.readFloat();
-		this.freqEnd = in.readFloat();
-		this.volume = in.readFloat();
-		this.pitch = in.readFloat();
-		this.isochronic = in.readByte() != 0;
-	}
-
-	public static final Parcelable.Creator<BinauralBeatVoice> CREATOR = new Parcelable.Creator<BinauralBeatVoice>() {
-		@Override
-		public BinauralBeatVoice createFromParcel(Parcel source) {
-			return new BinauralBeatVoice(source);
-		}
-
-		@Override
-		public BinauralBeatVoice[] newArray(int size) {
-			return new BinauralBeatVoice[size];
-		}
-	};
 }

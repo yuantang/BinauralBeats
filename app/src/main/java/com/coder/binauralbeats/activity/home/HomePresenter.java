@@ -36,7 +36,6 @@ public class HomePresenter extends MvpBasePresenter<HomeView> {
             if (g == null) {
                 g = new CategoryGroup(catname);
                 try {
-                    Log.e("TAG", catname.toLowerCase());
                     g.setNiceName(MyApp.getInstance().getString(R.string.class.getField("group_"+catname.toLowerCase()).getInt(null)));
                 } catch (Exception e) {
 
@@ -46,8 +45,6 @@ public class HomePresenter extends MvpBasePresenter<HomeView> {
             pm.setProgram(DefaultProgramsBuilder.getProgram(pm));
             g.add(pm);
         }
-
         getView().showData(groups);
-
     }
 }
