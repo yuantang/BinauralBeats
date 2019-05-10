@@ -51,9 +51,9 @@ public abstract class BaseActivity<V extends MvpBaseView, P extends MvpBasePrese
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
-        if (Preferences.isNightMode()) {
-            setTheme(getDarkTheme());
-        }
+//        if (Preferences.isNightMode()) {
+//            setTheme(getDarkTheme());
+//        }
         setContentView(getLayout());
         unbinder = ButterKnife.bind(this);
         EventBus.getDefault().register(this);

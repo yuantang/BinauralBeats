@@ -32,7 +32,7 @@ public class Preferences {
         saveBoolean(PREFS_VIZ, on);
     }
     public static boolean isVizEnabled() {
-        return getBoolean(PREFS_VIZ, false);
+        return getBoolean(PREFS_VIZ, true);
     }
 
 

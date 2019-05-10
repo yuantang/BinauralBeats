@@ -69,8 +69,12 @@ public class VoicesPlayer extends Thread {
 		fade = 1f;
 		
 		playing = true;
-		if (track.getPlayState() != AudioTrack.PLAYSTATE_PLAYING)
-			track.play();
+		try{
+			if (track.getPlayState() != AudioTrack.PLAYSTATE_PLAYING)
+				track.play();
+		}catch (IllegalStateException e){
+
+		}
 	}
 	public boolean isPlayIng(){
 		return playing;

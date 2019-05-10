@@ -8,7 +8,6 @@
         <item name="playBarBackground">@drawable/play_bar_bg_selector</item>
     </style>
 
-
     <style name="AppBaseThemeDark" parent="Theme.AppCompat.NoActionBar">
         <item name="colorPrimary">@color/grey_900</item>
         <item name="colorPrimaryDark">@color/grey_900</item>

@@ -1,5 +1,6 @@
 package com.coder.binauralbeats.activity.home;
 
+import android.os.AsyncTask;
 import android.util.Log;
 
 import com.coder.binauralbeats.MyApp;
@@ -19,9 +20,13 @@ import java.util.Map;
  */
 
 public class HomePresenter extends MvpBasePresenter<HomeView> {
+    ArrayList<CategoryGroup>  groups;
     Map<String,ProgramMeta> programs;
-    ArrayList<CategoryGroup> groups;
     public void loadData(){
+        mAsyncTask.execute();
+//        getView().showData(groups);
+    }
+    private ArrayList<CategoryGroup> getData() {
         programs = DefaultProgramsBuilder.getProgramMethods(MyApp.getInstance());
         groups = new ArrayList<>();
         for (String pname: programs.keySet()) {
@@ -45,6 +50,18 @@ public class HomePresenter extends MvpBasePresenter<HomeView> {
             pm.setProgram(DefaultProgramsBuilder.getProgram(pm));
             g.add(pm);
         }
-        getView().showData(groups);
+        return groups;
     }
+
+    AsyncTask mAsyncTask=new AsyncTask() {
+        @Override
+        protected ArrayList<CategoryGroup> doInBackground(Object[] objects) {
+            return getData();
+        }
+        @Override
+        protected void onPostExecute(Object o) {
+            super.onPostExecute(o);
+            getView().showData(groups);
+        }
+    };
 }

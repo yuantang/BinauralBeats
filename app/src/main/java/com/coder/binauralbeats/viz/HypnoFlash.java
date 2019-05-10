@@ -10,6 +10,7 @@ import android.graphics.Rect;
 import com.coder.binauralbeats.beats.CanvasVisualization;
 import com.coder.binauralbeats.MyApp;
 import com.coder.binauralbeats.R;
+import com.coder.binauralbeats.utils.PicassoUtils;
 
 import java.util.Random;
 
@@ -60,8 +61,8 @@ public class HypnoFlash implements CanvasVisualization {
 		pFlash2 = new Paint();
 		pFlash2.setStyle(Paint.Style.FILL);
 		pFlash2.setColor(COLOR_FLASH2);
-		
-		background = BitmapFactory.decodeResource(MyApp.getInstance().getResources(), R.drawable.hypnosisspiral);
+		background = PicassoUtils.getBitmap(R.drawable.hypnosisspiral);
+//		background = BitmapFactory.decodeResource(MyApp.getInstance().getResources(), R.drawable.hypnosisspiral);
 
 		srcR = new Rect(0,0,background.getWidth(),background.getHeight());
 		dstR = new Rect(0,0,0,0);

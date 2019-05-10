@@ -29,9 +29,10 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
-import com.coder.binauralbeats.beats.CanvasVisualization;
 import com.coder.binauralbeats.MyApp;
 import com.coder.binauralbeats.R;
+import com.coder.binauralbeats.beats.CanvasVisualization;
+import com.coder.binauralbeats.utils.PicassoUtils;
 
 
 public class Morphine implements CanvasVisualization {
@@ -51,8 +52,8 @@ public class Morphine implements CanvasVisualization {
 		pLed = new Paint();
 		pLed.setStyle(Paint.Style.FILL);
 		pLed.setColor(COLOR_LED);
-		
-		background = BitmapFactory.decodeResource(MyApp.getInstance().getResources(), R.drawable.morphine);
+		background = PicassoUtils.getBitmap(R.drawable.morphine);
+//		background = BitmapFactory.decodeResource(MyApp.getInstance().getResources(), R.drawable.morphine);
 		
 		srcR = new Rect(0,0,background.getWidth(),background.getHeight());
 		dstR = new Rect(0,0,0,0);

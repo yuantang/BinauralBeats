@@ -8,7 +8,6 @@
 		android:orientation="vertical"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
-		android:background="@mipmap/default_bg"
 		>
 		<android.support.design.widget.AppBarLayout
 			android:layout_width="match_parent"

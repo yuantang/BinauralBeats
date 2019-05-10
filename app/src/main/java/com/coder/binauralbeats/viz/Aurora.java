@@ -32,6 +32,7 @@ import android.graphics.Rect;
 import com.coder.binauralbeats.MyApp;
 import com.coder.binauralbeats.R;
 import com.coder.binauralbeats.beats.CanvasVisualization;
+import com.coder.binauralbeats.utils.PicassoUtils;
 
 public class Aurora implements CanvasVisualization {
 	
@@ -45,7 +46,8 @@ public class Aurora implements CanvasVisualization {
 	private Rect dstR;
 	
 	public Aurora() {
-		background = BitmapFactory.decodeResource(MyApp.getInstance().getResources(), R.drawable.aurora);
+		background = PicassoUtils.getBitmap(R.drawable.aurora);
+//		background = BitmapFactory.decodeResource(MyApp.getInstance().getResources(), R.drawable.aurora);
 		pTag = new Paint();
 		pTag.setStyle(Paint.Style.FILL);
 		

@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorWhite"
     >
     <ImageView
         android:id="@+id/welcome_img"
@@ -10,6 +9,6 @@
         android:layout_centerHorizontal="true"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@mipmap/ic_launcher_circle"
+        android:src="@mipmap/ic_launcher"
         />
 </RelativeLayout>

@@ -30,9 +30,10 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
-import com.coder.binauralbeats.beats.CanvasVisualization;
 import com.coder.binauralbeats.MyApp;
 import com.coder.binauralbeats.R;
+import com.coder.binauralbeats.beats.CanvasVisualization;
+import com.coder.binauralbeats.utils.PicassoUtils;
 
 import java.util.Random;
 
@@ -57,9 +58,11 @@ public class Hiit implements CanvasVisualization {
 	public Hiit() {
 		pLed = new Paint();
 		pLed.setStyle(Paint.Style.FILL);
-		
-		bgWork = BitmapFactory.decodeResource(MyApp.getInstance().getResources(), R.drawable.hiit_work);
-		bgRest = BitmapFactory.decodeResource(MyApp.getInstance().getResources(), R.drawable.hiit_rest);
+
+		bgWork = PicassoUtils.getBitmap(R.drawable.hiit_work);
+		bgRest = PicassoUtils.getBitmap(R.drawable.hiit_rest);
+//		bgWork = BitmapFactory.decodeResource(MyApp.getInstance().getResources(), R.drawable.hiit_work);
+//		bgRest = BitmapFactory.decodeResource(MyApp.getInstance().getResources(), R.drawable.hiit_rest);
 		
 		srcR = new Rect(0,0,bgWork.getWidth(),bgWork.getHeight());
 		dstR = new Rect(0,0,0,0);

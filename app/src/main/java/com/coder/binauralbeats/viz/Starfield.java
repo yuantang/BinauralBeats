@@ -29,9 +29,10 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
-import com.coder.binauralbeats.beats.CanvasVisualization;
 import com.coder.binauralbeats.MyApp;
 import com.coder.binauralbeats.R;
+import com.coder.binauralbeats.beats.CanvasVisualization;
+import com.coder.binauralbeats.utils.PicassoUtils;
 
 import java.util.Random;
 
@@ -82,8 +83,8 @@ public class Starfield implements CanvasVisualization {
 		pBG = new Paint();
 		pBG.setStyle(Paint.Style.FILL);
 		pBG.setColor(COLOR_BG);
-		
-		background = BitmapFactory.decodeResource(MyApp.getInstance().getResources(), R.drawable.oobe);
+		background = PicassoUtils.getBitmap(R.drawable.oobe);
+//		background = BitmapFactory.decodeResource(MyApp.getInstance().getResources(), R.drawable.oobe);
 		srcR = new Rect(0,0,background.getWidth(),background.getHeight());
 		dstR = new Rect(0,0,0,0);
 	}

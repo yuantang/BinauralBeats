@@ -11,6 +11,7 @@ import android.widget.TextView;
 /**
  * 通用的RecyclerView.ViewHolder。提供了根据viewId获取View的方法。
  * 提供了对View、TextView、ImageView的常用设置方法。
+ * @author TUS
  */
 public class BaseViewHolder extends RecyclerView.ViewHolder {
 

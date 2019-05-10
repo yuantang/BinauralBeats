@@ -8,7 +8,9 @@
         <item
             android:id="@+id/nav_theme"
             android:icon="@drawable/ic_menu_theme"
-            android:title="Dark Theme" />
+            android:title="Dark Theme"
+            android:visible="false"
+            />
         <item android:id="@+id/nav_rate"
             android:icon="@drawable/ic_menu_star"
             android:title="Rate and Review"/>

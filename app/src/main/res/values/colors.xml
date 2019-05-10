@@ -4,9 +4,9 @@
     <color name="colorPrimary">#FFC107</color>
     <color name="colorAccent">#FF4081</color>
 
-    <!--<color name="colorPrimaryDarkBlack">#000000</color>-->
-    <!--<color name="colorPrimaryBlack">#212121</color>-->
-    <!--<color name="colorAccentBlack">#FF4081</color>-->
+    <color name="colorPrimaryDarkBlack">#000000</color>
+    <color name="colorPrimaryBlack">#212121</color>
+    <color name="colorAccentBlack">#212121</color>
 
     <color name="colorWhite">#ffffff</color>
     <color name="white_96p">#F5FFFFFF</color>
@@ -18,8 +18,8 @@
     <color name="grey_700_96p">#F5616161</color>
     <color name="grey_300_96p">#F5E0E0E0</color>
 
-    <color name="grey_900">#212121</color>
-    <color name="grey_3030">#303030</color>
+    <color name="grey_900">#000000</color>
+    <color name="grey_3030">#212121</color>
     <color name="grey_800">#424242</color>
     <color name="grey_900_96p">#F5212121</color>
 </resources>

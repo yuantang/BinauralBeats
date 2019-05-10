@@ -30,9 +30,10 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
-import com.coder.binauralbeats.beats.CanvasVisualization;
 import com.coder.binauralbeats.MyApp;
 import com.coder.binauralbeats.R;
+import com.coder.binauralbeats.beats.CanvasVisualization;
+import com.coder.binauralbeats.utils.PicassoUtils;
 
 
 public class LSD implements CanvasVisualization {
@@ -47,7 +48,8 @@ public class LSD implements CanvasVisualization {
 	private Rect dstR;
 	
 	public LSD() {
-		background = BitmapFactory.decodeResource(MyApp.getInstance().getResources(), R.drawable.lsd);
+		background = PicassoUtils.getBitmap(R.drawable.lsd);
+//		background = BitmapFactory.decodeResource(MyApp.getInstance().getResources(), R.drawable.lsd);
 		pTag = new Paint();
 		pTag.setStyle(Paint.Style.FILL);
 		
