@@ -4,7 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.util.Log;
+import android.util.Config;
 
 import com.coder.binauralbeats.utils.Preferences;
 import com.github.moduth.blockcanary.BlockCanary;
@@ -45,7 +45,9 @@ public class MyApp extends Application {
         CrashReport.setIsDevelopmentDevice(this, false);
         MobileAds.initialize(this,"ca-app-pub-4727610544131155~6488840515");
         // 在主进程初始化调用哈
-     	BlockCanary.install(this, new AppBlockCanaryContext()).start();
+        if (BuildConfig.DEBUG) {
+            BlockCanary.install(this, new AppBlockCanaryContext()).start();
+        }
     }
     public class AppBlockCanaryContext extends BlockCanaryContext {
         // 实现各种上下文，包括应用标示符，用户uid，网络类型，卡慢判断阙值，Log保存位置等
