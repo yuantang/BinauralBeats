@@ -28,9 +28,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -56,7 +53,6 @@ public abstract class BaseActivity<V extends MvpBaseView, P extends MvpBasePrese
 //        }
         setContentView(getLayout());
         unbinder = ButterKnife.bind(this);
-        EventBus.getDefault().register(this);
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
         if (this.mPresenter==null){
             this.mPresenter=createPresenter();
@@ -85,10 +81,6 @@ public abstract class BaseActivity<V extends MvpBaseView, P extends MvpBasePrese
         }
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void OnEventReceive(BusEvent event) {
-
-    }
     @StyleRes
     protected int getDarkTheme() {
         return R.style.AppThemeDark;
@@ -122,7 +114,6 @@ public abstract class BaseActivity<V extends MvpBaseView, P extends MvpBasePrese
         }
         unbinder.unbind();
         ActivityCollector.removeActivity(this);
-        EventBus.getDefault().unregister(this);
     }
     private void firebaseConfig() {
         mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();

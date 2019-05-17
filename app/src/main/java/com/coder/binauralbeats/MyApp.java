@@ -4,8 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.util.Config;
 
+import com.coder.binauralbeats.beats.CategoryGroup;
 import com.coder.binauralbeats.utils.Preferences;
 import com.github.moduth.blockcanary.BlockCanary;
 import com.github.moduth.blockcanary.BlockCanaryContext;
@@ -14,6 +14,7 @@ import com.google.android.gms.ads.MobileAds;
 import com.tencent.bugly.crashreport.CrashReport;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -23,6 +24,7 @@ import java.util.List;
 
 public class MyApp extends Application {
     private static MyApp mInstance;
+    public ArrayList<CategoryGroup> groups;
     public static MyApp getInstance() {
         if (mInstance == null) {
             synchronized (MyApp.class) {

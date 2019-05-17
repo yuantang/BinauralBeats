@@ -9,9 +9,12 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.coder.binauralbeats.ConsIntent;
+import com.coder.binauralbeats.MyApp;
 import com.coder.binauralbeats.R;
 import com.coder.binauralbeats.activity.BBeatActivity;
 import com.coder.binauralbeats.adapter.GroupedListAdapter;
@@ -25,7 +28,6 @@ import com.coder.binauralbeats.executor.NavigationMenuExecutor;
 import com.donkingliang.groupedadapter.adapter.GroupedRecyclerViewAdapter;
 import com.donkingliang.groupedadapter.holder.BaseViewHolder;
 
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
@@ -72,9 +74,12 @@ public class HomeActivity extends BaseActivity
             @Override
             public void onChildClick(GroupedRecyclerViewAdapter adapter, BaseViewHolder holder,
                                      int groupPosition, int childPosition) {
-                Program program=groups.get(groupPosition).getObjets().get(childPosition).getProgram();
-                EventBus.getDefault().postSticky(new BusEvent("key",program));
-                Intent intent=new Intent(HomeActivity.this,BBeatActivity.class);
+                Program p=groups.get(groupPosition).getObjets().get(childPosition).getProgram();
+
+                Intent intent=new Intent(HomeActivity.this,BBeatActivity.class)
+                        .putExtra(ConsIntent.groupId,groupPosition)
+                        .putExtra(ConsIntent.childId,childPosition)
+                        .putExtra(ConsIntent.programName,p.getName());
                 startActivity(intent);
             }
         });
@@ -128,7 +133,12 @@ public class HomeActivity extends BaseActivity
 
     @Override
     public void showData(ArrayList<CategoryGroup> groupList) {
+        MyApp.getInstance().groups=groupList;
         groups=groupList;
         adapter.upData(groupList);
+    }
+    @Override
+    public void showProgramData(Program program) {
+
     }
 }

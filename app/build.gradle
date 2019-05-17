@@ -6,8 +6,8 @@ android {
         applicationId "com.coder.binauralbeats"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 6
-        versionName "1.1.0"
+        versionCode 8
+        versionName "1.1.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     signingConfigs {
@@ -26,7 +26,7 @@ android {
     }
     buildTypes {
         debug {
-            minifyEnabled true
+            minifyEnabled false
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -54,7 +54,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation files('libs/GnauralJava.jar')
     implementation project(':groupedadapter')
-    compile 'org.greenrobot:eventbus:3.1.1'
     //腾讯Bugly
     compile 'com.tencent.bugly:crashreport:latest.release'
     compile 'com.google.firebase:firebase-core:11.4.2'

@@ -1,13 +1,13 @@
 package com.coder.binauralbeats.activity.home;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.coder.binauralbeats.MyApp;
 import com.coder.binauralbeats.R;
 import com.coder.binauralbeats.basemvp.MvpBasePresenter;
 import com.coder.binauralbeats.beats.CategoryGroup;
 import com.coder.binauralbeats.beats.DefaultProgramsBuilder;
+import com.coder.binauralbeats.beats.Program;
 import com.coder.binauralbeats.beats.ProgramMeta;
 
 import java.util.ArrayList;
@@ -22,10 +22,17 @@ import java.util.Map;
 public class HomePresenter extends MvpBasePresenter<HomeView> {
     ArrayList<CategoryGroup>  groups;
     Map<String,ProgramMeta> programs;
+    Program mProgram;
     public void loadData(){
         mAsyncTask.execute();
-//        getView().showData(groups);
     }
+    public void getProgram(int groupPosition,int childPosition){
+        ArrayList<CategoryGroup> categoryGroups=MyApp.getInstance().groups;
+        if (categoryGroups!=null){
+            mProgram=categoryGroups.get(groupPosition).getObjets().get(childPosition).getProgram();
+            getView().showProgramData(mProgram);
+        }
+    };
     private ArrayList<CategoryGroup> getData() {
         programs = DefaultProgramsBuilder.getProgramMethods(MyApp.getInstance());
         groups = new ArrayList<>();
@@ -64,4 +71,5 @@ public class HomePresenter extends MvpBasePresenter<HomeView> {
             getView().showData(groups);
         }
     };
+
 }

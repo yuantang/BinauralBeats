@@ -23,12 +23,16 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.coder.binauralbeats.ConsIntent;
 import com.coder.binauralbeats.R;
+import com.coder.binauralbeats.activity.home.HomePresenter;
+import com.coder.binauralbeats.activity.home.HomeView;
 import com.coder.binauralbeats.base.BaseActivity;
 import com.coder.binauralbeats.basemvp.MvpBasePresenter;
 import com.coder.binauralbeats.basemvp.MvpBaseView;
 import com.coder.binauralbeats.beats.BinauralBeatVoice;
 import com.coder.binauralbeats.beats.CanvasVizualizationView;
+import com.coder.binauralbeats.beats.CategoryGroup;
 import com.coder.binauralbeats.beats.GLVizualizationView;
 import com.coder.binauralbeats.beats.Period;
 import com.coder.binauralbeats.beats.Program;
@@ -44,7 +48,6 @@ import com.coder.binauralbeats.utils.Preferences;
 import com.coder.binauralbeats.viz.Black;
 import com.coder.binauralbeats.viz.GLBlack;
 
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -52,7 +55,7 @@ import java.util.Vector;
 
 import butterknife.BindView;
 
-public class BBeatActivity extends BaseActivity {
+public class BBeatActivity extends BaseActivity implements HomeView {
     private static final String TAG = "BBeatActivity";
     @BindView(R.id.beat_toolbar)
     Toolbar beatToolbar;
@@ -108,6 +111,18 @@ public class BBeatActivity extends BaseActivity {
     private static Program currentProgram;
 
     private MenuItem playMenu,visableMenu;
+    private HomePresenter homePresenter;
+    private int groupId;
+    private int childId;
+    private String name;
+    @Override
+    protected MvpBasePresenter createPresenter() {
+        return homePresenter==null ? homePresenter=new HomePresenter():homePresenter;
+    }
+    @Override
+    protected MvpBaseView createView() {
+        return this;
+    }
     @Override
     protected int getLayout() {
         return R.layout.beat_activity;
@@ -120,17 +135,19 @@ public class BBeatActivity extends BaseActivity {
         /* Init sounds */
         loadConfig();
         initSounds();
-
         mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-
-        BusEvent event = EventBus.getDefault().getStickyEvent(BusEvent.class);
-        currentProgram = (Program) event.getValue();
-        if (currentProgram==null) {
-            finish();
+        if (getIntent().hasExtra(ConsIntent.groupId)){
+            groupId=getIntent().getIntExtra(ConsIntent.groupId,0);
         }
-        String name = currentProgram.getName();
+        if (getIntent().hasExtra(ConsIntent.childId)){
+            childId=getIntent().getIntExtra(ConsIntent.childId,0);
+        }
+        if (getIntent().hasExtra(ConsIntent.programName)){
+            name=getIntent().getStringExtra(ConsIntent.programName);
+        }
+        homePresenter.getProgram(groupId,childId);
         setSupportActionBar(beatToolbar);
-        if (getSupportActionBar()!=null) {
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(name);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
@@ -149,14 +166,12 @@ public class BBeatActivity extends BaseActivity {
                         break;
                     case R.id.action_visable:
                         setGraphicsEnabled(!vizEnabled);
-                        item.setIcon(vizEnabled ? R.drawable.ic_action_visable:R.drawable.ic_action_visable_off);
+                        item.setIcon(vizEnabled ? R.drawable.ic_action_visable : R.drawable.ic_action_visable_off);
                         break;
                 }
                 return false;
             }
         });
-        startProgram();
-        startPreviouslySelectedProgram();
         pause_time = -1;
         soundVolumeBar.setMax(100);
         mSoundBeatVolume = DEFAULT_VOLUME;
@@ -165,9 +180,11 @@ public class BBeatActivity extends BaseActivity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
+
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
             }
+
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 mSoundBeatVolume = ((float) progress) / 100.f;
@@ -181,9 +198,11 @@ public class BBeatActivity extends BaseActivity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
+
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
             }
+
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 mSoundBGVolume = ((float) progress) / 100.f;
@@ -191,23 +210,22 @@ public class BBeatActivity extends BaseActivity {
             }
         });
 
-        IntentFilter intentFilter=new IntentFilter();
+        IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(ACTION_PAUSE);
-        registerReceiver(broadcastReceiver,intentFilter);
+        registerReceiver(broadcastReceiver, intentFilter);
 
     }
-
     @Override
-    protected MvpBasePresenter createPresenter() {
-        return null;
-    }
-
+    public void showData(ArrayList<CategoryGroup> categoryGroups) {}
     @Override
-    protected MvpBaseView createView() {
-        return null;
+    public void showProgramData(Program program) {
+        if (program==null){
+            finish();
+        }
+        currentProgram=program;
+        startProgram();
+        startPreviouslySelectedProgram();
     }
-
-
 
     /**
      * 初始化背景音
@@ -310,7 +328,6 @@ public class BBeatActivity extends BaseActivity {
 
     @Override
     protected void onDestroy() {
-        EventBus.getDefault().unregister(this);
         stopVoicePlayer();
         stopProgram();
         cancelAllNotifications();
@@ -585,9 +602,11 @@ public class BBeatActivity extends BaseActivity {
                                 sProgramLength
                 );
 
-                if (mNotificationManager!=null && mNotification!=null && mNotification.contentView!=null) {
-                    mNotification.contentView.setTextViewText(R.id.notification_text, getString(R.string.notif_descr, Status.getText()));
-                    mNotificationManager.notify(notificationId, mNotification);
+                if (mNotificationManager != null && mNotification != null) {
+                    if (mNotification.contentView != null) {
+                        mNotification.contentView.setTextViewText(R.id.notification_text, getString(R.string.notif_descr, Status.getText()));
+                        mNotificationManager.notify(notificationId, mNotification);
+                    }
                 }
                 updatePeriodGraph((now - startTime) / 1000);
             }
@@ -719,9 +738,6 @@ public class BBeatActivity extends BaseActivity {
         }
     }
 
-    private void ToastText(int id) {
-        Toast.makeText(this, getString(id), Toast.LENGTH_SHORT).show();
-    }
 
 
     private void startNotification(String programName) {
@@ -760,5 +776,8 @@ public class BBeatActivity extends BaseActivity {
             }
         }
     };
+    private void ToastText(int id) {
+        Toast.makeText(this, getString(id), Toast.LENGTH_SHORT).show();
+    }
 
 }
