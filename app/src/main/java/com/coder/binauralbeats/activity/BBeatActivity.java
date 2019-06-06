@@ -1,14 +1,17 @@
 package com.coder.binauralbeats.activity;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.SoundPool;
+import android.os.Build;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.support.v7.widget.Toolbar;
@@ -41,13 +44,11 @@ import com.coder.binauralbeats.beats.StreamVoice;
 import com.coder.binauralbeats.beats.Visualization;
 import com.coder.binauralbeats.beats.VizualisationView;
 import com.coder.binauralbeats.beats.VoicesPlayer;
-import com.coder.binauralbeats.event.BusEvent;
 import com.coder.binauralbeats.graphview.GraphView;
 import com.coder.binauralbeats.graphview.LineGraphView;
 import com.coder.binauralbeats.utils.Preferences;
 import com.coder.binauralbeats.viz.Black;
 import com.coder.binauralbeats.viz.GLBlack;
-
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -83,6 +84,8 @@ public class BBeatActivity extends BaseActivity implements HomeView {
     private SoundPool mSoundPool;
     private NotificationManager mNotificationManager;
     private Notification mNotification;
+    private String mNotificationChannel="bb_notification";
+    private String mNotificationChannelName="bb_notification_cc";
     private int notificationId=999;
     private String ACTION_PAUSE ="action.beat.play.pause";
     private String ACTION_EVENT="playorpause";
@@ -279,8 +282,10 @@ public class BBeatActivity extends BaseActivity implements HomeView {
      * 暂停控制
      */
     public void pauseOrResume() {
+        Log.e(TAG,"========pause_time1======"+pause_time);
         playMenu.setIcon(pause_time > 0 ? R.drawable.ic_action_pause:R.drawable.ic_action_play);
         if (mNotification!=null && mNotification.contentView!=null) {
+            Log.e(TAG,"========pause_time2======"+pause_time);
             mNotification.contentView.setImageViewResource(R.id.notification_pause,pause_time > 0 ? R.drawable.ic_action_pause:R.drawable.ic_action_play);
             mNotificationManager.notify(notificationId,mNotification);
         }
@@ -418,7 +423,9 @@ public class BBeatActivity extends BaseActivity implements HomeView {
                 mSoundPool.setVolume(v.streamID, 0, 0);
             }
         }
-        mVoicesPlayer.setVolume(0);
+        if (mVoicesPlayer!=null) {
+            mVoicesPlayer.setVolume(0);
+        }
     }
 
     /**
@@ -593,21 +600,18 @@ public class BBeatActivity extends BaseActivity implements HomeView {
                 oldDelta = delta;
                 // Down to seconds
                 delta = delta / 20;
-                Status.setText(String.format(formatString,
-                        freq,
+                Status.setText(String.format(formatString, freq,
                         formatTimeNumberWithLeadingZero((int) delta / 60),
                         formatTimeNumberWithLeadingZero((int) delta % 60)
-                        )
-                                +
-                                sProgramLength
+                        ) + sProgramLength
                 );
 
-                if (mNotificationManager != null && mNotification != null) {
-                    if (mNotification.contentView != null) {
-                        mNotification.contentView.setTextViewText(R.id.notification_text, getString(R.string.notif_descr, Status.getText()));
-                        mNotificationManager.notify(notificationId, mNotification);
-                    }
-                }
+//                if (mNotificationManager != null && mNotification != null) {
+//                    if (mNotification.contentView != null) {
+//                        mNotification.contentView.setTextViewText(R.id.notification_text, getString(R.string.notif_descr, Status.getText()));
+//                        mNotificationManager.notify(notificationId, mNotification);
+//                    }
+//                }
                 updatePeriodGraph((now - startTime) / 1000);
             }
         }
@@ -741,8 +745,32 @@ public class BBeatActivity extends BaseActivity implements HomeView {
 
 
     private void startNotification(String programName) {
-        Notification.Builder builder = new Notification.Builder(this);//新建Notification.Builder对象
-        PendingIntent intent = PendingIntent.getActivity(this, 0, new Intent(this, BBeatActivity.class), 0);
+        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
+            mNotification = new Notification.Builder(this,mNotificationChannel).setSmallIcon(R.mipmap.ic_launcher).build();
+            NotificationChannel mChannel = new NotificationChannel(mNotificationChannel, mNotificationChannelName, NotificationManager.IMPORTANCE_LOW);
+            // 开启指示灯，如果设备有的话。
+            mChannel.enableLights(false);
+            // 开启震动
+            mChannel.enableVibration(false);
+            //  设置指示灯颜色
+            mChannel.setLightColor(Color.YELLOW);
+            // 设置是否应在锁定屏幕上显示此频道的通知
+            mChannel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+            // 设置是否显示角标
+            mChannel.setShowBadge(true);
+            //  设置绕过免打扰模式
+            mChannel.setBypassDnd(false);
+            // 设置震动频率
+            mChannel.setVibrationPattern(new long[]{100, 200, 300, 400});
+            //最后在notificationmanager中创建该通知渠道
+            mNotificationManager.createNotificationChannel(mChannel);
+
+        } else if(Build.VERSION.SDK_INT >= 16 ){
+            mNotification = new Notification.Builder(this).setSmallIcon(R.mipmap.ic_launcher).build();
+        }else {
+            mNotification = new Notification();
+        }
+        PendingIntent intent = PendingIntent.getActivity(this, 0, new Intent(this,BBeatActivity.class), 0);
         //PendingIntent点击通知后所跳转的页面
         Intent intentPause=new Intent(ACTION_PAUSE).putExtra(ACTION_EVENT,ACTION_EVENT_CODE);
         PendingIntent pause= PendingIntent.getBroadcast(this,112,intentPause,0);
@@ -750,13 +778,10 @@ public class BBeatActivity extends BaseActivity implements HomeView {
         view.setOnClickPendingIntent(R.id.status_bar_latest_event_content, intent);
         view.setOnClickPendingIntent(R.id.notification_pause, pause);
         view.setTextViewText(R.id.notification_title,getString(R.string.notif_descr, programName));
-        builder.setSmallIcon(R.mipmap.ic_launcher);
-        builder.setContent(view);
-        builder.setAutoCancel(true);
-        builder.setContentIntent(intent);//执行intent
-        mNotification = builder.getNotification();//将builder对象转换为普通的notification
+        mNotification.contentView=view;
+        mNotification.contentIntent=intent;
         mNotification.flags |= Notification.FLAG_ONGOING_EVENT | Notification.FLAG_NO_CLEAR;
-        mNotificationManager.notify(notificationId, mNotification);//运行notification
+        mNotificationManager.notify(notificationId, mNotification);
     }
     private long getClock() {
         return SystemClock.elapsedRealtime();

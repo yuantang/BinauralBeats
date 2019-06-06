@@ -157,8 +157,12 @@ public class CanvasVizualizationView extends SurfaceView implements Callback,Viz
 			// do this in a finally so that if an exception is thrown
 			// during the above, we don't leave the Surface in an
 			// inconsistent state
-			if (c != null) {
-				mSurfaceHolder.unlockCanvasAndPost(c);
+			try {
+				if (c != null) {
+					mSurfaceHolder.unlockCanvasAndPost(c);
+				}
+			}catch (IllegalArgumentException e){
+
 			}
 		}
 	}

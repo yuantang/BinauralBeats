@@ -68,7 +68,9 @@ public class HomePresenter extends MvpBasePresenter<HomeView> {
         @Override
         protected void onPostExecute(Object o) {
             super.onPostExecute(o);
-            getView().showData(groups);
+            if (getView()!=null) {
+                getView().showData(groups);
+            }
         }
     };
 
