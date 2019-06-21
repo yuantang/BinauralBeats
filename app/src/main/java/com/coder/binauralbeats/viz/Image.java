@@ -31,7 +31,6 @@ import android.graphics.Rect;
 import com.coder.binauralbeats.MyApp;
 import com.coder.binauralbeats.beats.CanvasVisualization;
 import com.coder.binauralbeats.utils.PicassoUtils;
-import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 

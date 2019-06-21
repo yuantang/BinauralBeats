@@ -6,8 +6,8 @@ android {
         applicationId "com.coder.binauralbeats"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 9
-        versionName "1.1.2"
+        versionCode 10
+        versionName "1.1.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     signingConfigs {
@@ -27,11 +27,13 @@ android {
     buildTypes {
         debug {
             minifyEnabled false
+            shrinkResources false
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         release {
             minifyEnabled true
+            shrinkResources true
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -46,20 +48,20 @@ dependencies {
     implementation "com.android.support:cardview-v7:$rootProject.ext.supportLibraryVersion"
     implementation "com.android.support:design:$rootProject.ext.supportLibraryVersion"
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile "com.jakewharton:butterknife:$rootProject.ext.butterknifeVersion"
+    implementation "com.jakewharton:butterknife:$rootProject.ext.butterknifeVersion"
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.ext.butterknifeVersion"
     implementation "com.android.support.constraint:constraint-layout:$rootProject.ext.constraintVersion"
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-    implementation files('libs/GnauralJava.jar')
+//    implementation files('libs/GnauralJava.jar')
     implementation project(':groupedadapter')
     //腾讯Bugly
-    compile 'com.tencent.bugly:crashreport:latest.release'
-    compile 'com.google.firebase:firebase-core:11.4.2'
-    compile 'com.google.firebase:firebase-ads:11.4.2'
-    compile 'com.google.firebase:firebase-config:11.4.2'
+    implementation 'com.tencent.bugly:crashreport:latest.release'
+    implementation 'com.google.firebase:firebase-core:11.4.2'
+    implementation 'com.google.firebase:firebase-ads:11.4.2'
+    implementation 'com.google.firebase:firebase-config:11.4.2'
     //ANR检测工具
-    compile 'com.github.markzhai:blockcanary-android:1.5.0'
-    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.github.markzhai:blockcanary-android:1.5.0'
+//    implementation 'com.squareup.picasso:picasso:2.71828'
 }
