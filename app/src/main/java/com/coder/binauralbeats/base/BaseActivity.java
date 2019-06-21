@@ -68,8 +68,8 @@ public abstract class BaseActivity<V extends MvpBaseView, P extends MvpBasePrese
         superInit(getIntent());
         initEventAndData();
         setToolBar();
-        firebaseConfig();
-
+//        firebaseConfig();
+        addAdView();
         super.onCreate(savedInstanceState);
     }
 

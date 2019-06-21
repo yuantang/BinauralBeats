@@ -282,17 +282,16 @@ public class BBeatActivity extends BaseActivity implements HomeView {
      * 暂停控制
      */
     public void pauseOrResume() {
-        Log.e(TAG,"========pause_time1======"+pause_time);
         playMenu.setIcon(pause_time > 0 ? R.drawable.ic_action_pause:R.drawable.ic_action_play);
         if (mNotification!=null && mNotification.contentView!=null) {
-            Log.e(TAG,"========pause_time2======"+pause_time);
             mNotification.contentView.setImageViewResource(R.id.notification_pause,pause_time > 0 ? R.drawable.ic_action_pause:R.drawable.ic_action_play);
             mNotificationManager.notify(notificationId,mNotification);
         }
-
         if (pause_time > 0) {
             long delta = getClock() - pause_time;
-            programFSM.catchUpAfterPause(delta);
+            if(programFSM!=null) {
+                programFSM.catchUpAfterPause(delta);
+            }
             pause_time = -1;
             unMuteAll();
         } else {
@@ -304,6 +303,9 @@ public class BBeatActivity extends BaseActivity implements HomeView {
     }
 
     private void setGraphicsEnabled(boolean on) {
+        if (programFSM==null){
+            return;
+        }
         if (vizEnabled && on == false) {
             // Disable Viz
             Period p = programFSM.getCurrentPeriod();
