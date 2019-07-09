@@ -1,9 +1,12 @@
 package com.coder.binauralbeats.executor;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.coder.binauralbeats.R;
@@ -59,10 +62,15 @@ public class NavigationMenuExecutor {
     }
 
     private static void doStartPlay(Context context) {
-        String mAddress = "market://details?id=" + context.getPackageName();
-        Intent marketIntent = new Intent("android.intent.action.VIEW");
-        marketIntent.setData(Uri.parse(mAddress ));
-        context.startActivity(marketIntent);
+        try {
+            String mAddress = "market://details?id=" + context.getPackageName();
+            Intent marketIntent = new Intent("android.intent.action.VIEW");
+            marketIntent.setData(Uri.parse(mAddress ));
+            context.startActivity(marketIntent);
+        }catch (ActivityNotFoundException e){
+            Log.e("tag", "GoogleMarket Intent not found");
+        }
+
     }
 
     private static void nightMode(final Activity activity) {
@@ -74,4 +82,5 @@ public class NavigationMenuExecutor {
             }
         });
     }
+
 }

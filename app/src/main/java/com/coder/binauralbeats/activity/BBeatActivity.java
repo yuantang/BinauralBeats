@@ -58,22 +58,16 @@ import butterknife.BindView;
 
 public class BBeatActivity extends BaseActivity implements HomeView {
     private static final String TAG = "BBeatActivity";
-    @BindView(R.id.beat_toolbar)
     Toolbar beatToolbar;
     //背景展示
-    @BindView(R.id.VisualizationView)
     FrameLayout mVizHolder ;
-    @BindView(R.id.soundBGVolumeBar)
     SeekBar soundBGVolumeBar;
     //背景音量控制
-    @BindView(R.id.soundVolumeBar)
     SeekBar soundVolumeBar;
     //音量控制
     //双耳节拍频率折线图
-    @BindView(R.id.graphVoices)
     LinearLayout mGraphVoices;
     //双耳节拍频率
-    @BindView(R.id.Status)
     TextView Status;
 
     enum eState {START, RUNNING, END}
@@ -136,9 +130,14 @@ public class BBeatActivity extends BaseActivity implements HomeView {
     @Override
     protected void initEventAndData() {
         /* Init sounds */
+        initView();
+
         loadConfig();
+
         initSounds();
+
         mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
         if (getIntent().hasExtra(ConsIntent.groupId)){
             groupId=getIntent().getIntExtra(ConsIntent.groupId,0);
         }
@@ -149,6 +148,7 @@ public class BBeatActivity extends BaseActivity implements HomeView {
             name=getIntent().getStringExtra(ConsIntent.programName);
         }
         homePresenter.getProgram(groupId,childId);
+
         setSupportActionBar(beatToolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(name);
@@ -218,6 +218,17 @@ public class BBeatActivity extends BaseActivity implements HomeView {
         registerReceiver(broadcastReceiver, intentFilter);
 
     }
+
+    private void initView() {
+        beatToolbar=findViewById(R.id.beat_toolbar);
+        mVizHolder=findViewById(R.id.VisualizationView);
+        soundBGVolumeBar=findViewById(R.id.soundBGVolumeBar);
+        soundVolumeBar=findViewById(R.id.soundVolumeBar);
+        mGraphVoices=findViewById(R.id.graphVoices);
+        Status=findViewById(R.id.Status);
+
+    }
+
     @Override
     public void showData(ArrayList<CategoryGroup> categoryGroups) {}
     @Override
@@ -277,12 +288,13 @@ public class BBeatActivity extends BaseActivity implements HomeView {
         }
     }
 
-
     /**
      * 暂停控制
      */
     public void pauseOrResume() {
-        playMenu.setIcon(pause_time > 0 ? R.drawable.ic_action_pause:R.drawable.ic_action_play);
+        if (playMenu!=null){
+            playMenu.setIcon(pause_time > 0 ? R.drawable.ic_action_pause:R.drawable.ic_action_play);
+        }
         if (mNotification!=null && mNotification.contentView!=null) {
             mNotification.contentView.setImageViewResource(R.id.notification_pause,pause_time > 0 ? R.drawable.ic_action_pause:R.drawable.ic_action_play);
             mNotificationManager.notify(notificationId,mNotification);

@@ -128,7 +128,7 @@ public class Starfield implements CanvasVisualization {
 					}
 				} else {
 					s.x = 0;
-					s.y = r.nextInt(height);
+					s.y = height > 0 ? r.nextInt(height) : 0;
 					s.speedx = 1 + r.nextInt(4);
 					s.speedy = 0;
 				}
