@@ -84,7 +84,7 @@ public class Starfield3D implements CanvasVisualization {
 		pBG = new Paint();
 		pBG.setStyle(Paint.Style.FILL);
 		pBG.setColor(COLOR_BG);
-		background = PicassoUtils.getBitmap(R.drawable.oobe);
+		background = PicassoUtils.getBitmap(R.mipmap.oobe);
 //		background = BitmapFactory.decodeResource(MyApp.getInstance().getResources(), R.drawable.oobe);
 		
 		z_to_color = new int[NUM_STARS+1];

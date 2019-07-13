@@ -61,7 +61,7 @@ public class NavigationMenuExecutor {
         context.startActivity(Intent.createChooser(intent, "请选择邮件类应用"));
     }
 
-    private static void doStartPlay(Context context) {
+    public static void doStartPlay(Context context) {
         try {
             String mAddress = "market://details?id=" + context.getPackageName();
             Intent marketIntent = new Intent("android.intent.action.VIEW");

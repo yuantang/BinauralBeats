@@ -191,7 +191,7 @@ public class WordUtils {
             } else {
                 // really long word or URL
                 if (wrapLongWords) {
-                    // wrap really long word one line at a time
+                    // wrap really long word one line at a product_icon_time
                     wrappedLine.append(str.substring(offset, wrapLength + offset));
                     wrappedLine.append(newLineStr);
                     offset += wrapLength;
@@ -221,7 +221,7 @@ public class WordUtils {
     /**
      * <p>Capitalizes all the whitespace separated words in a String.
      * Only the first letter of each word is changed. To convert the 
-     * rest of each word to lowercase at the same time, 
+     * rest of each word to lowercase at the same product_icon_time,
      * use {@link #capitalizeFully(String)}.</p>
      *
      * <p>Whitespace is defined by {@link Character#isWhitespace(char)}.
@@ -247,7 +247,7 @@ public class WordUtils {
     /**
      * <p>Capitalizes all the delimiter separated words in a String.
      * Only the first letter of each word is changed. To convert the 
-     * rest of each word to lowercase at the same time, 
+     * rest of each word to lowercase at the same product_icon_time,
      * use {@link #capitalizeFully(String, char[])}.</p>
      *
      * <p>The delimiters represent a set of characters understood to separate words.

@@ -294,7 +294,7 @@ public class DefaultProgramsBuilder {
 
 
 	public static Program MEDITATION_SCHUMANN_RESONANCE(Program p) {
-		Visualization v = new Image(R.drawable.warp);
+		Visualization v = new Image(R.mipmap.warp);
 		p.setDescription(MyApp.getInstance().getString(R.string.program_schumann_resonance_desc));
 //		p.setDescription("A meditation to put your mind in balance with the Earth. Glide down to Schumann Resonance, low frequency portion of the Earth's electromagnetic field, resonate for 10 minutes then slowly come back up to awake state.");
 
@@ -342,7 +342,7 @@ public class DefaultProgramsBuilder {
 		p.addPeriod(new Period(120,SoundLoop.NONE, 0.2f, null).
 				addVoice( new BinauralBeatVoice(20f, 70f, 0.65f)).
 				addVoice( new BinauralBeatVoice(20f, 50f, 0.55f)).
-				setV(new Image(R.drawable.hiit_warmup)));
+				setV(new Image(R.mipmap.hiit_warmup)));
 
 		for (int i=0; i<8;i++)
 			p.addPeriod(new Period(20,SoundLoop.NONE, 0.2f, null).
@@ -360,7 +360,7 @@ public class DefaultProgramsBuilder {
 				addVoice( new BinauralBeatVoice(3.7f, 3.7f, 0.4f)).
 				addVoice( new BinauralBeatVoice(2.5f, 2.5f, 0.4f)).
 				addVoice( new BinauralBeatVoice(5.9f, 5.9f, 0.4f)).
-				setV(new Image(R.drawable.hiit_cooldown)));
+				setV(new Image(R.mipmap.hiit_cooldown)));
 
 		return p;
 	}
@@ -495,7 +495,7 @@ public class DefaultProgramsBuilder {
 
 	public static Program SLEEP_SMR(Program p) {
 
-		CanvasVisualization m = new Image(R.drawable.egg);
+		CanvasVisualization m = new Image(R.mipmap.egg);
 		p.setDescription(MyApp.getInstance().getString(R.string.program_smr_desc));
 //		p.setDescription("Insomnia relief through stimulating Sensory Motor Rythm. Don\'t use it at bedtime, use it only during your insomnia, for example if you wake up in the middle of the night and can\'t go back to sleep 38 mn of crossing frequencies from 8 to 12 Hz.");
 		p.setAuthor("@thegreenman");

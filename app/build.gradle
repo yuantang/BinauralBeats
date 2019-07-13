@@ -11,30 +11,30 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     signingConfigs {
-        release {
-            storeFile file("bb.jks")
-            storePassword "123456"
-            keyAlias "bb"
-            keyPassword "123456"
-        }
-        debug {
-            storeFile file("bb.jks")
-            storePassword "123456"
-            keyAlias "bb"
-            keyPassword "123456"
-        }
+//        release {
+//            storeFile file("bb.jks")
+//            storePassword "123456"
+//            keyAlias "bb"
+//            keyPassword "123456"
+//        }
+//        debug {
+//            storeFile file("bb.jks")
+//            storePassword "123456"
+//            keyAlias "bb"
+//            keyPassword "123456"
+//        }
     }
     buildTypes {
         debug {
-            minifyEnabled false
-            shrinkResources false
-            signingConfig signingConfigs.release
+            minifyEnabled true
+            shrinkResources true
+//            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         release {
             minifyEnabled true
             shrinkResources true
-            signingConfig signingConfigs.release
+//            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -58,5 +58,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-config:11.4.2'
     //ANR检测工具
     implementation 'com.github.markzhai:blockcanary-android:1.5.0'
+    implementation 'com.github.navasmdc:MaterialDesign:1.5@aar'
+
 //    implementation 'com.squareup.picasso:picasso:2.71828'
 }

@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 
+import org.xmlpull.v1.XmlPullParser;
+
 /**
  * SharedPreferences工具类
  * Created by wcy on 2015/11/28.
@@ -13,6 +15,7 @@ public class Preferences {
 
     private static final String NIGHT_MODE = "night_mode";
     private static final String PREFS_VIZ = "VIZ";
+    private static final String OPEN_TIME = "open_time";
 
     private static Context sContext;
 
@@ -35,6 +38,14 @@ public class Preferences {
         return getBoolean(PREFS_VIZ, true);
     }
 
+    public static int getOpenTimes(){
+        return getInt(OPEN_TIME,0);
+    }
+    public static void saveOpenTime(){
+        int lastTime=getInt(OPEN_TIME,0);
+        lastTime++;
+        saveInt(OPEN_TIME,lastTime);
+    }
 
     private static boolean getBoolean(String key, boolean defValue) {
         return getPreferences().getBoolean(key, defValue);

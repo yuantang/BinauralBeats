@@ -93,7 +93,7 @@ public class MyApp extends Application {
         }
 
         /**
-         * Config monitor duration, after this time BlockCanary will stop, use
+         * Config monitor duration, after this product_icon_time BlockCanary will stop, use
          * with {@code BlockCanary}'s isMonitorDurationEnd
          *
          * @return monitor last duration (in hour)

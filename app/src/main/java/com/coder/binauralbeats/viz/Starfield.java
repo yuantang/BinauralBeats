@@ -83,7 +83,7 @@ public class Starfield implements CanvasVisualization {
 		pBG = new Paint();
 		pBG.setStyle(Paint.Style.FILL);
 		pBG.setColor(COLOR_BG);
-		background = PicassoUtils.getBitmap(R.drawable.oobe);
+		background = PicassoUtils.getBitmap(R.mipmap.oobe);
 //		background = BitmapFactory.decodeResource(MyApp.getInstance().getResources(), R.drawable.oobe);
 		srcR = new Rect(0,0,background.getWidth(),background.getHeight());
 		dstR = new Rect(0,0,0,0);

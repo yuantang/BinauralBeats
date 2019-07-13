@@ -1,8 +1,13 @@
 package com.coder.binauralbeats.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.view.View;
 
+import com.coder.binauralbeats.ConsIntent;
 import com.coder.binauralbeats.R;
+import com.coder.binauralbeats.activity.BBeatActivity;
+import com.coder.binauralbeats.activity.home.HomeActivity;
 import com.coder.binauralbeats.beats.CategoryGroup;
 import com.coder.binauralbeats.beats.Program;
 import com.coder.binauralbeats.beats.ProgramMeta;
@@ -23,9 +28,9 @@ public class GroupedListAdapter extends GroupedRecyclerViewAdapter {
         super(context);
         this.context=context;
     }
-   public void upData(ArrayList<CategoryGroup> groups){
-       this.mGroups = groups;
-       notifyDataSetChanged();
+    public void upData(ArrayList<CategoryGroup> groups){
+        this.mGroups = groups;
+        notifyDataSetChanged();
     }
     @Override
     public int getGroupCount() {
@@ -75,12 +80,22 @@ public class GroupedListAdapter extends GroupedRecyclerViewAdapter {
     }
 
     @Override
-    public void onBindChildViewHolder(com.donkingliang.groupedadapter.holder.BaseViewHolder holder, int groupPosition, int childPosition) {
+    public void onBindChildViewHolder(com.donkingliang.groupedadapter.holder.BaseViewHolder holder, final int groupPosition, final int childPosition) {
         ProgramMeta entity = mGroups.get(groupPosition).getObjets().get(childPosition);
-        Program p = entity.getProgram();
+        final Program p = entity.getProgram();
         holder.setText(R.id.child_name_txt, p.getName());
         holder.setText(R.id.child_author_txt,p.getAuthor());
         holder.setText(R.id.child_length_txt, StringUtils.formatDuration(context,p.getLength()*1000));
         holder.setText(R.id.child_desc_txt,p.getDescription());
+        holder.get(R.id.child_item_view).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(context, BBeatActivity.class)
+                        .putExtra(ConsIntent.groupId,groupPosition)
+                        .putExtra(ConsIntent.childId,childPosition)
+                        .putExtra(ConsIntent.programName,p.getName());
+                context.startActivity(intent);
+            }
+        });
     }
 }

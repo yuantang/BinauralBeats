@@ -30,9 +30,9 @@ task clean(type: Delete) {
 
 ext{
     //SDK
-    minSdkVersion = 15
-    targetSdkVersion = 26
-    compileSdkVersion = 26
+    minSdkVersion = 18
+    targetSdkVersion = 28
+    compileSdkVersion = 28
     //dependencies
     supportLibraryVersion ='26.1.0'
     butterknifeVersion = '8.8.1'

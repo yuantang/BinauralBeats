@@ -47,7 +47,7 @@ public abstract class BaseActivity<V extends MvpBaseView, P extends MvpBasePrese
     FirebaseRemoteConfig mFirebaseRemoteConfig;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-
+        super.onCreate(savedInstanceState);
 //        if (Preferences.isNightMode()) {
 //            setTheme(getDarkTheme());
 //        }
@@ -70,7 +70,7 @@ public abstract class BaseActivity<V extends MvpBaseView, P extends MvpBasePrese
         setToolBar();
 //        firebaseConfig();
         addAdView();
-        super.onCreate(savedInstanceState);
+
     }
 
     private void displayWelcomeMessage() {

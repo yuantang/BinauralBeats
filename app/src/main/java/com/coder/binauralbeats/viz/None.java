@@ -30,7 +30,7 @@ import com.coder.binauralbeats.R;
 public class None extends Image {
 
 	public None() {
-		super(R.drawable.none);
+		super(R.mipmap.none);
 	}
 
 }

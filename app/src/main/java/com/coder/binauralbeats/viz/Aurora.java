@@ -46,7 +46,7 @@ public class Aurora implements CanvasVisualization {
 	private Rect dstR;
 	
 	public Aurora() {
-		background = PicassoUtils.getBitmap(R.drawable.aurora);
+		background = PicassoUtils.getBitmap(R.mipmap.aurora);
 //		background = BitmapFactory.decodeResource(MyApp.getInstance().getResources(), R.drawable.aurora);
 		pTag = new Paint();
 		pTag.setStyle(Paint.Style.FILL);

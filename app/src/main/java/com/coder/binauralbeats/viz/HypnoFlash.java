@@ -61,7 +61,7 @@ public class HypnoFlash implements CanvasVisualization {
 		pFlash2 = new Paint();
 		pFlash2.setStyle(Paint.Style.FILL);
 		pFlash2.setColor(COLOR_FLASH2);
-		background = PicassoUtils.getBitmap(R.drawable.hypnosisspiral);
+		background = PicassoUtils.getBitmap(R.mipmap.hypnosisspiral);
 //		background = BitmapFactory.decodeResource(MyApp.getInstance().getResources(), R.drawable.hypnosisspiral);
 
 		srcR = new Rect(0,0,background.getWidth(),background.getHeight());

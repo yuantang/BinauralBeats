@@ -85,5 +85,7 @@
     <string name="program_adhd_desc">This preset is an aid for Attention Deficit Hyperactivity Disorder. It lasts 30mn and alternates between 12 and 20 hz. It can be used whenever needed</string>
     <string name="program_powernap_desc">Around 20mn of rest to make it through the day. Put on your headphones and relax!</string>
     <string name="program_airplanetravelaid_desc">Designed to make time go faster on flights. Constant declining base frequency, you can relax or read a book at the same time. Can be repeated if wanted.</string>
+    <string name="good_review_txt">If this application is helpful to you, please let us know by comment. If there is any need for improvement, please let us know. Your good comments are the biggest motivation for me to optimize this application. Thank you for your support.</string>
+    <string name="cancel_txt">CANCEL</string>
 
 </resources>

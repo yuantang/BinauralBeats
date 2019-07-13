@@ -48,7 +48,7 @@ public class LSD implements CanvasVisualization {
 	private Rect dstR;
 	
 	public LSD() {
-		background = PicassoUtils.getBitmap(R.drawable.lsd);
+		background = PicassoUtils.getBitmap(R.mipmap.lsd);
 //		background = BitmapFactory.decodeResource(MyApp.getInstance().getResources(), R.drawable.lsd);
 		pTag = new Paint();
 		pTag.setStyle(Paint.Style.FILL);

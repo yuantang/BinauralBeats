@@ -33,8 +33,8 @@ import android.view.SurfaceView;
 
 public class CanvasVizualizationView extends SurfaceView implements Callback,VizualisationView {
 
-	protected static final long DRAW_REFRESH_INTERVAL_NS = 1000 * 1000 * 1000 / 16; // # time between refreshes
-	protected static final long DRAW_REFRESH_INTERVAL_MIN_NS = 1000 * 1000 * 1000 / 20; // # time between refreshes
+	protected static final long DRAW_REFRESH_INTERVAL_NS = 1000 * 1000 * 1000 / 16; // # product_icon_time between refreshes
+	protected static final long DRAW_REFRESH_INTERVAL_MIN_NS = 1000 * 1000 * 1000 / 20; // # product_icon_time between refreshes
 	private static final String LOGVIZVIEW = "BBT-VIZ";
 	private SurfaceHolder mSurfaceHolder;
 	private int width;

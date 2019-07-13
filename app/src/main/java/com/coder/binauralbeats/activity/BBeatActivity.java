@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import com.coder.binauralbeats.ConsIntent;
 import com.coder.binauralbeats.R;
+import com.coder.binauralbeats.activity.home.HomeActivity;
 import com.coder.binauralbeats.activity.home.HomePresenter;
 import com.coder.binauralbeats.activity.home.HomeView;
 import com.coder.binauralbeats.base.BaseActivity;
@@ -44,11 +45,13 @@ import com.coder.binauralbeats.beats.StreamVoice;
 import com.coder.binauralbeats.beats.Visualization;
 import com.coder.binauralbeats.beats.VizualisationView;
 import com.coder.binauralbeats.beats.VoicesPlayer;
+import com.coder.binauralbeats.executor.NavigationMenuExecutor;
 import com.coder.binauralbeats.graphview.GraphView;
 import com.coder.binauralbeats.graphview.LineGraphView;
 import com.coder.binauralbeats.utils.Preferences;
 import com.coder.binauralbeats.viz.Black;
 import com.coder.binauralbeats.viz.GLBlack;
+import com.gc.materialdesign.widgets.Dialog;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -216,7 +219,21 @@ public class BBeatActivity extends BaseActivity implements HomeView {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(ACTION_PAUSE);
         registerReceiver(broadcastReceiver, intentFilter);
+        addGoodReview();
+    }
 
+    private void addGoodReview() {
+        if (Preferences.getOpenTimes()==20){
+            Dialog dialog = new Dialog(this, null,getResources().getString(R.string.good_review_txt));
+            dialog.setOnAcceptButtonClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    NavigationMenuExecutor.doStartPlay(BBeatActivity.this);
+                }
+            });
+            dialog.addCancelButton(getResources().getString(R.string.cancel_txt));
+            dialog.show();
+        }
     }
 
     private void initView() {
@@ -307,7 +324,7 @@ public class BBeatActivity extends BaseActivity implements HomeView {
             pause_time = -1;
             unMuteAll();
         } else {
-            /* This is a pause time */
+            /* This is a pause product_icon_time */
             pause_time = getClock();
             muteAll();
         }
@@ -817,6 +834,12 @@ public class BBeatActivity extends BaseActivity implements HomeView {
     };
     private void ToastText(int id) {
         Toast.makeText(this, getString(id), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Preferences.saveOpenTime();
     }
 
 }

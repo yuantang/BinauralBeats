@@ -59,8 +59,8 @@ public class Hiit implements CanvasVisualization {
 		pLed = new Paint();
 		pLed.setStyle(Paint.Style.FILL);
 
-		bgWork = PicassoUtils.getBitmap(R.drawable.hiit_work);
-		bgRest = PicassoUtils.getBitmap(R.drawable.hiit_rest);
+		bgWork = PicassoUtils.getBitmap(R.mipmap.hiit_work);
+		bgRest = PicassoUtils.getBitmap(R.mipmap.hiit_rest);
 //		bgWork = BitmapFactory.decodeResource(MyApp.getInstance().getResources(), R.drawable.hiit_work);
 //		bgRest = BitmapFactory.decodeResource(MyApp.getInstance().getResources(), R.drawable.hiit_rest);
 		

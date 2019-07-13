@@ -7,7 +7,7 @@ public interface GLVisualization extends Visualization {
 	
 	/**
 	 * Called at each beat,
-	 * total time is the entire length of the current period.
+	 * total product_icon_time is the entire length of the current period.
 	 * 
 	 * @param gl     OpenGL object
 	 * @param width  Canvas width

@@ -31,8 +31,8 @@ import javax.microedition.khronos.opengles.GL11;
 
 public class GLVizualizationView extends GLSurfaceView implements GLSurfaceView.Renderer,VizualisationView {
 	
-	protected static final long DRAW_REFRESH_INTERVAL_NS = 1000 * 1000 * 1000 / 16; // # time between refreshes
-	protected static final long DRAW_REFRESH_INTERVAL_MIN_NS = 1000 * 1000 * 1000 / 20; // # time between refreshes
+	protected static final long DRAW_REFRESH_INTERVAL_NS = 1000 * 1000 * 1000 / 16; // # product_icon_time between refreshes
+	protected static final long DRAW_REFRESH_INTERVAL_MIN_NS = 1000 * 1000 * 1000 / 20; // # product_icon_time between refreshes
 	private static final String LOGVIZVIEW = "BBT-GLVIZ";
 	
 	private int width;

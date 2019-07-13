@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.coder.binauralbeats.ConsIntent;
 import com.coder.binauralbeats.MyApp;
@@ -25,8 +26,10 @@ import com.coder.binauralbeats.beats.CategoryGroup;
 import com.coder.binauralbeats.beats.Program;
 import com.coder.binauralbeats.event.BusEvent;
 import com.coder.binauralbeats.executor.NavigationMenuExecutor;
+import com.coder.binauralbeats.utils.Preferences;
 import com.donkingliang.groupedadapter.adapter.GroupedRecyclerViewAdapter;
 import com.donkingliang.groupedadapter.holder.BaseViewHolder;
+import com.gc.materialdesign.widgets.Dialog;
 
 
 import java.util.ArrayList;
@@ -70,22 +73,10 @@ public class HomeActivity extends BaseActivity
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
         adapter=new GroupedListAdapter(this);
         recyclerview.setAdapter(adapter);
-        adapter.setOnChildClickListener(new GroupedRecyclerViewAdapter.OnChildClickListener() {
-            @Override
-            public void onChildClick(GroupedRecyclerViewAdapter adapter, BaseViewHolder holder,
-                                     int groupPosition, int childPosition) {
-                Program p=groups.get(groupPosition).getObjets().get(childPosition).getProgram();
-
-                Intent intent=new Intent(HomeActivity.this,BBeatActivity.class)
-                        .putExtra(ConsIntent.groupId,groupPosition)
-                        .putExtra(ConsIntent.childId,childPosition)
-                        .putExtra(ConsIntent.programName,p.getName());
-                startActivity(intent);
-            }
-        });
         if (homePresenter!=null){
             homePresenter.loadData();
         }
+
     }
     @Override
     public void onBackPressed() {

@@ -6,7 +6,7 @@ public interface CanvasVisualization extends Visualization {
 	
 	/**
 	 * Called at each beat,
-	 * total time is the entire length of the current period.
+	 * total product_icon_time is the entire length of the current period.
 	 * 
 	 * @param c      Canvas element to redraw into
 	 * @param width  Canvas width

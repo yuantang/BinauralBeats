@@ -52,7 +52,7 @@ public class Morphine implements CanvasVisualization {
 		pLed = new Paint();
 		pLed.setStyle(Paint.Style.FILL);
 		pLed.setColor(COLOR_LED);
-		background = PicassoUtils.getBitmap(R.drawable.morphine);
+		background = PicassoUtils.getBitmap(R.mipmap.morphine);
 //		background = BitmapFactory.decodeResource(MyApp.getInstance().getResources(), R.drawable.morphine);
 		
 		srcR = new Rect(0,0,background.getWidth(),background.getHeight());
