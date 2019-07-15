@@ -6,35 +6,35 @@ android {
         applicationId "com.coder.binauralbeats"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 10
-        versionName "1.1.3"
+        versionCode 11
+        versionName "1.1.4"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     signingConfigs {
-//        release {
-//            storeFile file("bb.jks")
-//            storePassword "123456"
-//            keyAlias "bb"
-//            keyPassword "123456"
-//        }
-//        debug {
-//            storeFile file("bb.jks")
-//            storePassword "123456"
-//            keyAlias "bb"
-//            keyPassword "123456"
-//        }
+        release {
+            storeFile file("bb.jks")
+            storePassword "123456"
+            keyAlias "bb"
+            keyPassword "123456"
+        }
+        debug {
+            storeFile file("bb.jks")
+            storePassword "123456"
+            keyAlias "bb"
+            keyPassword "123456"
+        }
     }
     buildTypes {
         debug {
             minifyEnabled true
             shrinkResources true
-//            signingConfig signingConfigs.release
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         release {
             minifyEnabled true
             shrinkResources true
-//            signingConfig signingConfigs.release
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -59,6 +59,4 @@ dependencies {
     //ANR检测工具
     implementation 'com.github.markzhai:blockcanary-android:1.5.0'
     implementation 'com.github.navasmdc:MaterialDesign:1.5@aar'
-
-//    implementation 'com.squareup.picasso:picasso:2.71828'
 }

@@ -223,7 +223,7 @@ public class BBeatActivity extends BaseActivity implements HomeView {
     }
 
     private void addGoodReview() {
-        if (Preferences.getOpenTimes()==20){
+        if (Preferences.getOpenTimes()==20||Preferences.getOpenTimes()==2000){
             Dialog dialog = new Dialog(this, null,getResources().getString(R.string.good_review_txt));
             dialog.setOnAcceptButtonClickListener(new View.OnClickListener() {
                 @Override
