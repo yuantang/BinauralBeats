@@ -11,30 +11,30 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     signingConfigs {
-//        release {
-//            storeFile file("bb.jks")
-//            storePassword "123456"
-//            keyAlias "bb"
-//            keyPassword "123456"
-//        }
-//        debug {
-//            storeFile file("bb.jks")
-//            storePassword "123456"
-//            keyAlias "bb"
-//            keyPassword "123456"
-//        }
+        release {
+            storeFile file("bb.jks")
+            storePassword "123456"
+            keyAlias "bb"
+            keyPassword "123456"
+        }
+        debug {
+            storeFile file("bb.jks")
+            storePassword "123456"
+            keyAlias "bb"
+            keyPassword "123456"
+        }
     }
     buildTypes {
         debug {
             minifyEnabled true
             shrinkResources true
-//            signingConfig signingConfigs.release
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         release {
             minifyEnabled true
             shrinkResources true
-//            signingConfig signingConfigs.release
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

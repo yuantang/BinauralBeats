@@ -162,7 +162,7 @@ public class DefaultProgramsBuilder {
 		p.setAuthor("@GiorgioRegni");
 
 		p.addPeriod(new Period(120,SoundLoop.WHITE_NOISE, 0.3f, null).
-				addVoice( new BinauralBeatVoice(12f, 70f, 0.60f)).
+				addVoice(new BinauralBeatVoice(12f, 70f, 0.60f)).
 				setV(new Leds())).
 				addPeriod(new Period(600,SoundLoop.WHITE_NOISE, 0.3f, null).
 						addVoice( new BinauralBeatVoice(70f, 50f, 0.65f)).
@@ -193,7 +193,6 @@ public class DefaultProgramsBuilder {
 
 	public static Program HEALING_MORPHINE(Program p) {
 		p.setDescription(MyApp.getInstance().getString(R.string.program_morphine_desc));
-//		p.setDescription("A relaxing, southing mix of beats that slowly but surely appease any pain point. The brain runs the body as you will discover with this preset.");
 		p.setAuthor("@GiorgioRegni");
 
 		// From http://www.bwgen.com/presets/desc263.htm
@@ -211,7 +210,6 @@ public class DefaultProgramsBuilder {
 
 	public static Program LEARNING_LEARNING(Program p) {
 		p.setDescription(MyApp.getInstance().getString(R.string.program_learning_desc));
-//		p.setDescription("A 2h preset that enhances learning, increases ability to concentrate and think clearly, reduces unwillingness to work. Students can't get enough of this program! This one is to be listened while studying. ");
 		p.setAuthor("@GiorgioRegni");
 		p.addPeriod(new Period(120,SoundLoop.NONE, 0.6f, null).
 				addVoice( new BinauralBeatVoice(60f, 14f, 0.60f)).
